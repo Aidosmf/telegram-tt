@@ -1,22 +1,14 @@
-import type { Literal, Node, Parent } from './ast';
+import type { Literal as UnistLiteral, Node as UnistNode, Parent as UnistParent } from './unist';
+
+export type Node = UnistNode;
+export type Parent = UnistParent;
+export type Literal = UnistLiteral;
 
 /**
  * Example: > text
  */
 export interface Blockquote extends Parent {
   type: 'blockquote';
-}
-
-/**
- * Example:
- * ----------------
- * paragraph1
- *
- * paragraph1
- * ----------------
- */
-export interface Break extends Node {
-  type: 'break';
 }
 
 /**
@@ -73,10 +65,14 @@ export interface Paragraph extends Parent {
 }
 
 /**
+ * aka Strikethrough & Delete
+ *
  * Example: ~~text~~
+ *
+ * Note: Telegram macOS app supports double '~' for strike.
  */
-export interface Delete extends Parent {
-  type: 'delete';
+export interface Strike extends Parent {
+  type: 'strike';
 }
 
 /**

@@ -1,6 +1,6 @@
 import type { ApiFormattedText, ApiMessageEntity } from '../api/types';
 import { ApiMessageEntityTypes } from '../api/types';
-
+import { tokenize } from '../lib/temark';
 import { RE_LINK_TEMPLATE } from '../config';
 import { IS_EMOJI_SUPPORTED } from './windowEnvironment';
 
@@ -24,6 +24,10 @@ const MAX_TAG_DEEPNESS = 3;
 export default function parseHtmlAsFormattedText(
   html: string, withMarkdownLinks = false, skipMarkdown = false,
 ): ApiFormattedText {
+  const tokens = tokenize(html);
+
+  console.log('AIDOS', 'tokens', html, tokens);
+
   const fragment = document.createElement('div');
   fragment.innerHTML = skipMarkdown ? html
     : withMarkdownLinks ? parseMarkdown(parseMarkdownLinks(html)) : parseMarkdown(html);
@@ -60,6 +64,8 @@ export default function parseHtmlAsFormattedText(
     addEntity(node);
   });
 
+
+
   return {
     text,
     entities: entities.length ? entities : undefined,
@@ -78,6 +84,10 @@ export function fixImageContent(fragment: HTMLDivElement) {
 
 function parseMarkdown(html: string) {
   let parsedHtml = html.slice(0);
+
+  // const res = parseMarkdown(html);
+
+  // console.log("AIDOS", "parseMarkdown", html, parsedHtml, res);
 
   // Strip redundant nbsp's
   parsedHtml = parsedHtml.replace(/&nbsp;/g, ' ');
@@ -131,10 +141,14 @@ function parseMarkdown(html: string) {
     `<span data-entity-type="${ApiMessageEntityTypes.Spoiler}">$2</span>`,
   );
 
+  console.log("AIDOS", "parseMarkdown", html, parsedHtml);
+
   return parsedHtml;
 }
 
 function parseMarkdownLinks(html: string) {
+  // console.log("AIDOS", "MD links", html);
+
   return html.replace(new RegExp(`\\[([^\\]]+?)]\\((${RE_LINK_TEMPLATE}+?)\\)`, 'g'), (_, text, link) => {
     const url = link.includes('://') ? link : link.includes('@') ? `mailto:${link}` : `https://${link}`;
     return `<a href="${url}">${text}</a>`;
