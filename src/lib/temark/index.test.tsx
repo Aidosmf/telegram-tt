@@ -5,12 +5,13 @@
 /* eslint-disable max-len */
 
 /**
- * For running tests: "npx tsx src/lib/temark/tokens.test.tsx"
+ * For running tests: "npx tsx src/lib/temark/index.test.tsx"
  */
 
 import { strictEqual } from 'assert';
+import { writeFileSync } from 'fs';
 
-import { tokenize } from './tokens';
+import { parse } from './parse';
 
 const input = `# Link
 
@@ -1356,13 +1357,13 @@ const expectedTokens = [
   }
 ];
 
-const tokens = tokenize(input);
-
-// writeFileSync('tokens.json', JSON.stringify(tokens, null, 2));
+const root = parse(input);
 
 try {
-  strictEqual(JSON.stringify(tokens), JSON.stringify(expectedTokens));
+  strictEqual(JSON.stringify(root.tokens), JSON.stringify(expectedTokens));
   console.log('All tests passed!');
 } catch (error) {
   console.error('Error:', error);
 }
+
+writeFileSync('ast.json', JSON.stringify(root, undefined, 2));

@@ -12,6 +12,7 @@ export type Literal = UnistLiteral;
  */
 export interface Blockquote extends Parent {
   type: 'blockquote';
+  children: Array<FlowContent>;
 }
 
 /**
@@ -24,7 +25,7 @@ export interface Blockquote extends Parent {
  */
 export interface Code extends Literal {
   type: 'code';
-  lang?: string;
+  lang: string | null;
 }
 
 /**
@@ -32,10 +33,12 @@ export interface Code extends Literal {
  *
  * Example: *text* or _text_ (standard)
  *
- * Note: Telegram macOS only supports double '_'
+ * Note:
+ * - Telegram macOS & Web K support double '_'
  */
 export interface Emphasis extends Parent {
   type: 'emphasis';
+  children: PhrasingContent[];
 }
 
 /**
@@ -51,6 +54,7 @@ export interface InlineCode extends Literal {
 export interface Link extends Parent {
   type: 'link';
   url: string;
+  children: PhrasingContent[];
 }
 
 /**
@@ -67,6 +71,7 @@ export interface Html extends Literal {
  */
 export interface Paragraph extends Parent {
   type: 'paragraph';
+  children: PhrasingContent[];
 }
 
 /**
@@ -74,18 +79,11 @@ export interface Paragraph extends Parent {
  *
  * Example: ~~text~~
  *
- * Note: Telegram macOS app supports double '~' for strike.
+ * Note: Telegram macOS & Web K support double '~'
  */
 export interface Strike extends Parent {
   type: 'strike';
-}
-
-/**
- * Represents a root document.
- */
-export interface Root extends Parent {
-  type: 'root';
-  tokens?: Token[];
+  children: PhrasingContent[];
 }
 
 /**
@@ -93,10 +91,12 @@ export interface Root extends Parent {
  *
  * Example: **text** or __text__
  *
- * Note: Telegram macOS only supports double '*'
+ * Note:
+ * - Telegram macOS & Web K support double '*'
  */
 export interface Strong extends Parent {
   type: 'strong';
+  children: PhrasingContent[];
 }
 
 export interface Text extends Literal {
@@ -106,9 +106,38 @@ export interface Text extends Literal {
 /**
  * Example: ### text
  *
- * Note: Telegram macOS doesn't support headings
+ * Note: Telegram macOS & Web K do not support
  */
-export interface Heading extends Literal {
+export interface Heading extends Parent {
   type: 'heading';
   depth: 1 | 2 | 3 | 4 | 5 | 6;
+  children: PhrasingContent[];
 }
+
+/**
+ * Represents a root document.
+ */
+export interface Root extends Parent {
+  type: 'root';
+  tokens?: Token[];
+  children: AnyNode[];
+}
+
+export type AnyNode =
+  | Blockquote
+  | Code
+  | Emphasis
+  | InlineCode
+  | Link
+  | Html
+  | Paragraph
+  | Strike
+  | Strong
+  | Text
+  | Heading;
+
+export type PhrasingContent = Emphasis | Html | InlineCode | Link | Strong | Text | Strike;
+
+export type FlowContent = Blockquote | Code | Heading | Html | Content;
+
+export type Content = Paragraph;
