@@ -1,3 +1,4 @@
+import type { Token } from './tokens';
 import type { Literal as UnistLiteral, Node as UnistNode, Parent as UnistParent } from './unist';
 
 export type Node = UnistNode;
@@ -6,6 +7,8 @@ export type Literal = UnistLiteral;
 
 /**
  * Example: > text
+ *
+ * Note: Telegram macOS doesn't support blockquotes, only its own Quotes
  */
 export interface Blockquote extends Parent {
   type: 'blockquote';
@@ -27,7 +30,9 @@ export interface Code extends Literal {
 /**
  * aka Italic
  *
- * Examle: *text* or _text_
+ * Example: *text* or _text_ (standard)
+ *
+ * Note: Telegram macOS only supports double '_'
  */
 export interface Emphasis extends Parent {
   type: 'emphasis';
@@ -65,7 +70,7 @@ export interface Paragraph extends Parent {
 }
 
 /**
- * aka Strikethrough & Delete
+ * aka Strikethroug h & Delete
  *
  * Example: ~~text~~
  *
@@ -80,12 +85,15 @@ export interface Strike extends Parent {
  */
 export interface Root extends Parent {
   type: 'root';
+  tokens?: Token[];
 }
 
 /**
  * aka Bold
  *
  * Example: **text** or __text__
+ *
+ * Note: Telegram macOS only supports double '*'
  */
 export interface Strong extends Parent {
   type: 'strong';
@@ -93,4 +101,14 @@ export interface Strong extends Parent {
 
 export interface Text extends Literal {
   type: 'text';
+}
+
+/**
+ * Example: ### text
+ *
+ * Note: Telegram macOS doesn't support headings
+ */
+export interface Heading extends Literal {
+  type: 'heading';
+  depth: 1 | 2 | 3 | 4 | 5 | 6;
 }
