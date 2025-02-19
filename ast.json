@@ -2064,7 +2064,8 @@
       "range": [
         0,
         6
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Link",
@@ -2104,7 +2105,9 @@
       "range": [
         45,
         126
-      ]
+      ],
+      "tagName": "a",
+      "isVoidElement": false
     },
     {
       "type": "Heading",
@@ -2124,7 +2127,8 @@
       "range": [
         128,
         135
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Image",
@@ -2164,7 +2168,9 @@
       "range": [
         189,
         257
-      ]
+      ],
+      "tagName": "img",
+      "isVoidElement": true
     },
     {
       "type": "Heading",
@@ -2184,7 +2190,8 @@
       "range": [
         260,
         268
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Strike",
@@ -2244,7 +2251,9 @@
       "range": [
         303,
         331
-      ]
+      ],
+      "tagName": "del",
+      "isVoidElement": false
     },
     {
       "type": "Heading",
@@ -2264,7 +2273,8 @@
       "range": [
         333,
         348
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Strong",
@@ -2304,7 +2314,9 @@
       "range": [
         378,
         393
-      ]
+      ],
+      "tagName": "b",
+      "isVoidElement": false
     },
     {
       "type": "Strong",
@@ -2344,7 +2356,8 @@
       "range": [
         418,
         437
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Emphasis",
@@ -2404,7 +2417,9 @@
       "range": [
         489,
         498
-      ]
+      ],
+      "tagName": "em",
+      "isVoidElement": false
     },
     {
       "type": "Heading",
@@ -2424,7 +2439,8 @@
       "range": [
         500,
         511
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Html",
@@ -2444,7 +2460,9 @@
       "range": [
         513,
         538
-      ]
+      ],
+      "tagName": "u",
+      "isVoidElement": false
     },
     {
       "type": "Html",
@@ -2464,7 +2482,9 @@
       "range": [
         540,
         611
-      ]
+      ],
+      "tagName": "span",
+      "isVoidElement": false
     },
     {
       "type": "Html",
@@ -2484,7 +2504,9 @@
       "range": [
         613,
         644
-      ]
+      ],
+      "tagName": "ins",
+      "isVoidElement": false
     },
     {
       "type": "Heading",
@@ -2504,7 +2526,8 @@
       "range": [
         646,
         652
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Html",
@@ -2524,7 +2547,9 @@
       "range": [
         654,
         682
-      ]
+      ],
+      "tagName": "custom",
+      "isVoidElement": false
     },
     {
       "type": "Html",
@@ -2544,7 +2569,9 @@
       "range": [
         684,
         917
-      ]
+      ],
+      "tagName": "b",
+      "isVoidElement": false
     },
     {
       "type": "Html",
@@ -2564,7 +2591,9 @@
       "range": [
         919,
         958
-      ]
+      ],
+      "tagName": "div",
+      "isVoidElement": false
     },
     {
       "type": "Heading",
@@ -2584,7 +2613,8 @@
       "range": [
         960,
         972
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Blockquote",
@@ -2744,7 +2774,8 @@
       "range": [
         1099,
         1105
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Text",
@@ -2824,7 +2855,8 @@
       "range": [
         1131,
         1137
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "InlineCode",
@@ -3004,7 +3036,9 @@
       "range": [
         1349,
         1489
-      ]
+      ],
+      "tagName": "pre",
+      "isVoidElement": false
     },
     {
       "type": "Heading",
@@ -3024,7 +3058,8 @@
       "range": [
         1491,
         1498
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Strong",
@@ -3084,7 +3119,8 @@
       "range": [
         1548,
         1561
-      ]
+      ],
+      "depth": 1
     },
     {
       "type": "Text",
@@ -3244,7 +3280,9 @@
       "range": [
         1695,
         1726
-      ]
+      ],
+      "tagName": "div",
+      "isVoidElement": false
     }
   ]
 }

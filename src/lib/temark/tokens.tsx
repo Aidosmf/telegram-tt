@@ -47,10 +47,13 @@ export interface TokenHeading extends TokenBase {
 
 export interface TokenHtml extends TokenBase {
   type: 'Html';
+  tagName?: string;
+  isVoidElement?: boolean;
 }
 
 export interface TokenImage extends TokenBase {
   type: 'Image';
+  url?: string;
 }
 
 export interface TokenInlineCode extends TokenBase {
@@ -155,10 +158,14 @@ export class Tokenizer {
     return voidElements.has(tagName.toLowerCase());
   }
 
-  private createToken(tokenType: TokenType, startPoint: Point, endPoint?: Point): Token {
+  private createToken(
+    tokenType: TokenType,
+    startPoint: Point,
+    endPoint?: Point,
+    parts?: Record<string, unknown>,
+  ): Token {
     const value = this.value.join('');
     const length = value.length;
-
     this.value = []; // reset
 
     const endOffset = endPoint ? endPoint.offset : startPoint.offset + length;
@@ -176,13 +183,16 @@ export class Tokenizer {
         },
       },
       range,
+      ...(parts || {}),
     };
   }
 
   private readHeading(c: number, start: Point): Token {
     this.value.push(String.fromCharCode(c));
+    let depth = 1;
 
     while (this.reader.peek() === CC.CHAR_HASH) {
+      depth++;
       c = this.reader.next();
       this.value.push(String.fromCharCode(c));
     }
@@ -200,7 +210,8 @@ export class Tokenizer {
       peek = this.reader.peek();
     }
 
-    return this.createToken('Heading', start);
+    const parts = { depth };
+    return this.createToken('Heading', start, undefined, parts);
   }
 
   private readHtml(c: number, start: Point): Token {
@@ -230,9 +241,13 @@ export class Tokenizer {
       tagName += ch;
     }
 
-    if (htmlBlock.endsWith('/>') || Tokenizer.isVoidElement(tagName)) {
+    const isVoidElement = Tokenizer.isVoidElement(tagName);
+
+    if (htmlBlock.endsWith('/>') || isVoidElement) {
       this.value.push(htmlBlock);
-      return this.createToken('Html', start, this.reader.getPoint());
+      const end = this.reader.getPoint();
+      const parts = { tagName, isVoidElement };
+      return this.createToken('Html', start, end, parts);
     }
 
     const desiredClosing = `</${tagName}>`;
@@ -251,7 +266,10 @@ export class Tokenizer {
     }
 
     this.value.push(htmlBlock);
-    return this.createToken('Html', start);
+
+    const parts = { tagName, isVoidElement };
+
+    return this.createToken('Html', start, undefined, parts);
   }
 
   private readCode(c: number, start: Point): Token {
@@ -347,13 +365,14 @@ export class Tokenizer {
   }
 
   // Image: ![alt](url)
+  // TODO: add url param
   private readImage(c: number, start: Point): Token {
     if (this.reader.peek() !== CC.CHAR_SQUARE_BRACKET_OPEN) return this.readText(c, start);
 
-    this.value.push(String.fromCharCode(c));
+    this.value.push(String.fromCharCode(c)); // "!"
     c = this.reader.next();
 
-    this.value.push(String.fromCharCode(c));
+    this.value.push(String.fromCharCode(c)); // "["
     c = this.reader.next();
 
     while (c !== -1 && c !== CC.CHAR_SQUARE_BRACKET_CLOSE) {
@@ -362,7 +381,7 @@ export class Tokenizer {
     }
 
     if (c !== -1) {
-      this.value.push(String.fromCharCode(c));
+      this.value.push(String.fromCharCode(c)); // ]
     }
 
     if (this.reader.peek() === CC.CHAR_PARENTHESIS_OPEN) {
