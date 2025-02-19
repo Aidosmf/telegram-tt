@@ -20,12 +20,72 @@ export type TokenType =
 
 export type Range = [number, number];
 
-export interface Token {
+export interface TokenBase {
   type: TokenType;
   value: string;
   position: Position;
   range: Range;
 }
+
+export interface TokenBlockquote extends TokenBase {
+  type: 'Blockquote';
+}
+
+export interface TokenCode extends TokenBase {
+  type: 'Code';
+  lang?: string;
+}
+
+export interface TokenEmphasis extends TokenBase {
+  type: 'Emphasis';
+}
+
+export interface TokenHeading extends TokenBase {
+  type: 'Heading';
+  depth?: number;
+}
+
+export interface TokenHtml extends TokenBase {
+  type: 'Html';
+}
+
+export interface TokenImage extends TokenBase {
+  type: 'Image';
+}
+
+export interface TokenInlineCode extends TokenBase {
+  type: 'InlineCode';
+}
+
+export interface TokenLink extends TokenBase {
+  type: 'Link';
+  url?: string;
+}
+
+export interface TokenStrike extends TokenBase {
+  type: 'Strike';
+}
+
+export interface TokenStrong extends TokenBase {
+  type: 'Strong';
+}
+
+export interface TokenText extends TokenBase {
+  type: 'Text';
+}
+
+export type Token =
+  | TokenBlockquote
+  | TokenCode
+  | TokenEmphasis
+  | TokenHeading
+  | TokenHtml
+  | TokenImage
+  | TokenInlineCode
+  | TokenLink
+  | TokenStrike
+  | TokenStrong
+  | TokenText;
 
 export const TOKEN_TYPE = {
   EOF: 0,
