@@ -5,13 +5,13 @@
 /* eslint-disable max-len */
 
 /**
- * For running tests: "npx tsx src/lib/temark/index.test.tsx"
+ * For running tests: "npx tsx src/lib/temark/tokens.test.tsx"
  */
 
 import { strictEqual } from 'assert';
 import { writeFileSync } from 'fs';
 
-import { parse } from './parse';
+import { tokenize } from './tokens';
 
 const input = `# Link
 
@@ -129,9 +129,9 @@ with space\`
 
 # Mixed
 
-__* bold and italic*__
-
-_** italic and bold**_
+Lorem Ipsum is simply dummy _text_ of the printing and typesetting industry.
+Lorem Ipsum has been the industry's ~**standard**~ dummy text ever since the 1500s,
+when an [unknown](https://example.com/) printer took a galley of \`type\` and scrambled it to make a type specimen book
 
 # Broken HTML
 
@@ -177,7 +177,7 @@ const expectedTokens = [
     "depth": 1
   },
   {
-    "type": "Link",
+    "type": "Paragraph",
     "value": "[link - text](https://example.com/)",
     "position": {
       "start": {
@@ -240,7 +240,7 @@ const expectedTokens = [
     "depth": 1
   },
   {
-    "type": "Image",
+    "type": "Paragraph",
     "value": "![image-alt](https://picsum.photos/id/237/200/300)",
     "position": {
       "start": {
@@ -303,8 +303,8 @@ const expectedTokens = [
     "depth": 1
   },
   {
-    "type": "Strike",
-    "value": "strike double tilda",
+    "type": "Paragraph",
+    "value": "~~strike double tilda~~",
     "position": {
       "start": {
         "line": 15,
@@ -323,7 +323,7 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Text",
+    "type": "Paragraph",
     "value": "~text~",
     "position": {
       "start": {
@@ -386,8 +386,8 @@ const expectedTokens = [
     "depth": 1
   },
   {
-    "type": "Strong",
-    "value": "bold double underscore",
+    "type": "Paragraph",
+    "value": "__bold double underscore__",
     "position": {
       "start": {
         "line": 23,
@@ -428,8 +428,8 @@ const expectedTokens = [
     "isVoidElement": false
   },
   {
-    "type": "Strong",
-    "value": "bold2 doulbe star",
+    "type": "Paragraph",
+    "value": "**bold2 doulbe star**",
     "position": {
       "start": {
         "line": 27,
@@ -469,8 +469,8 @@ const expectedTokens = [
     "depth": 1
   },
   {
-    "type": "Emphasis",
-    "value": "italic single underscore",
+    "type": "Paragraph",
+    "value": "_italic single underscore_",
     "position": {
       "start": {
         "line": 31,
@@ -489,8 +489,8 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Emphasis",
-    "value": "italic single star",
+    "type": "Paragraph",
+    "value": "*italic single star*",
     "position": {
       "start": {
         "line": 33,
@@ -746,33 +746,13 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Text",
-    "value": "text line 2",
+    "type": "Paragraph",
+    "value": "text line 2\ntext line 3",
     "position": {
       "start": {
         "line": 65,
         "column": 1,
         "offset": 994
-      },
-      "end": {
-        "line": 65,
-        "column": 12,
-        "offset": 1005
-      }
-    },
-    "range": [
-      994,
-      1005
-    ]
-  },
-  {
-    "type": "Text",
-    "value": "text line 3",
-    "position": {
-      "start": {
-        "line": 66,
-        "column": 1,
-        "offset": 1006
       },
       "end": {
         "line": 66,
@@ -781,7 +761,7 @@ const expectedTokens = [
       }
     },
     "range": [
-      1006,
+      994,
       1017
     ]
   },
@@ -887,7 +867,7 @@ const expectedTokens = [
     "depth": 1
   },
   {
-    "type": "Text",
+    "type": "Paragraph",
     "value": "paragraph",
     "position": {
       "start": {
@@ -907,33 +887,13 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Text",
-    "value": "line1",
+    "type": "Paragraph",
+    "value": "line1\nline2",
     "position": {
       "start": {
         "line": 79,
         "column": 1,
         "offset": 1118
-      },
-      "end": {
-        "line": 79,
-        "column": 6,
-        "offset": 1123
-      }
-    },
-    "range": [
-      1118,
-      1123
-    ]
-  },
-  {
-    "type": "Text",
-    "value": "line2",
-    "position": {
-      "start": {
-        "line": 80,
-        "column": 1,
-        "offset": 1124
       },
       "end": {
         "line": 80,
@@ -942,7 +902,7 @@ const expectedTokens = [
       }
     },
     "range": [
-      1124,
+      1118,
       1129
     ]
   },
@@ -968,8 +928,8 @@ const expectedTokens = [
     "depth": 1
   },
   {
-    "type": "InlineCode",
-    "value": "inline code",
+    "type": "Paragraph",
+    "value": "`inline code`",
     "position": {
       "start": {
         "line": 84,
@@ -988,7 +948,7 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "InlineCode",
+    "type": "Code",
     "value": "inline code line1\ninline code line2",
     "position": {
       "start": {
@@ -1008,8 +968,8 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "InlineCode",
-    "value": "inline code",
+    "type": "Paragraph",
+    "value": "```inline code```",
     "position": {
       "start": {
         "line": 89,
@@ -1068,7 +1028,7 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "InlineCode",
+    "type": "Code",
     "value": "inline code\n\nwith space",
     "position": {
       "start": {
@@ -1088,7 +1048,7 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Text",
+    "type": "Paragraph",
     "value": "```inbalance inline code 1``",
     "position": {
       "start": {
@@ -1108,7 +1068,7 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Text",
+    "type": "Paragraph",
     "value": "`inbalance inline code 2```",
     "position": {
       "start": {
@@ -1171,8 +1131,8 @@ const expectedTokens = [
     "depth": 1
   },
   {
-    "type": "Strong",
-    "value": "* bold and italic*",
+    "type": "Paragraph",
+    "value": "Lorem Ipsum is simply dummy _text_ of the printing and typesetting industry.\nLorem Ipsum has been the industry's ~**standard**~ dummy text ever since the 1500s,\nwhen an [unknown](https://example.com/) printer took a galley of `type` and scrambled it to make a type specimen book",
     "position": {
       "start": {
         "line": 117,
@@ -1180,34 +1140,14 @@ const expectedTokens = [
         "offset": 1500
       },
       "end": {
-        "line": 117,
-        "column": 23,
-        "offset": 1522
+        "line": 119,
+        "column": 118,
+        "offset": 1778
       }
     },
     "range": [
       1500,
-      1522
-    ]
-  },
-  {
-    "type": "Emphasis",
-    "value": "** italic and bold**",
-    "position": {
-      "start": {
-        "line": 119,
-        "column": 1,
-        "offset": 1524
-      },
-      "end": {
-        "line": 119,
-        "column": 23,
-        "offset": 1546
-      }
-    },
-    "range": [
-      1524,
-      1546
+      1778
     ]
   },
   {
@@ -1217,178 +1157,178 @@ const expectedTokens = [
       "start": {
         "line": 121,
         "column": 1,
-        "offset": 1548
+        "offset": 1780
       },
       "end": {
         "line": 121,
         "column": 14,
-        "offset": 1561
+        "offset": 1793
       }
     },
     "range": [
-      1548,
-      1561
+      1780,
+      1793
     ],
     "depth": 1
   },
   {
-    "type": "Text",
+    "type": "Paragraph",
     "value": "textwithstar*",
     "position": {
       "start": {
         "line": 123,
         "column": 1,
-        "offset": 1563
+        "offset": 1795
       },
       "end": {
         "line": 123,
         "column": 14,
-        "offset": 1576
+        "offset": 1808
       }
     },
     "range": [
-      1563,
-      1576
+      1795,
+      1808
     ]
   },
   {
-    "type": "Text",
+    "type": "Paragraph",
     "value": "*starwithtext",
     "position": {
       "start": {
         "line": 125,
         "column": 1,
-        "offset": 1578
+        "offset": 1810
       },
       "end": {
         "line": 125,
         "column": 14,
-        "offset": 1591
+        "offset": 1823
       }
     },
     "range": [
-      1578,
-      1591
+      1810,
+      1823
     ]
   },
   {
-    "type": "Emphasis",
-    "value": "*textstaritalic",
+    "type": "Paragraph",
+    "value": "**textstaritalic*",
     "position": {
       "start": {
         "line": 127,
         "column": 1,
-        "offset": 1593
+        "offset": 1825
       },
       "end": {
         "line": 127,
-        "column": 16,
-        "offset": 1608
+        "column": 18,
+        "offset": 1842
       }
     },
     "range": [
-      1593,
-      1608
+      1825,
+      1842
     ]
   },
   {
-    "type": "Emphasis",
-    "value": "staritalictext*",
+    "type": "Paragraph",
+    "value": "*staritalictext**",
     "position": {
       "start": {
         "line": 129,
         "column": 1,
-        "offset": 1612
+        "offset": 1844
       },
       "end": {
         "line": 129,
         "column": 18,
-        "offset": 1629
+        "offset": 1861
       }
     },
     "range": [
-      1612,
-      1629
+      1844,
+      1861
     ]
   },
   {
-    "type": "Emphasis",
-    "value": "_textunderscoreitalic",
+    "type": "Paragraph",
+    "value": "__textunderscoreitalic_",
     "position": {
       "start": {
         "line": 131,
         "column": 1,
-        "offset": 1631
+        "offset": 1863
       },
       "end": {
         "line": 131,
-        "column": 22,
-        "offset": 1652
+        "column": 24,
+        "offset": 1886
       }
     },
     "range": [
-      1631,
-      1652
+      1863,
+      1886
     ]
   },
   {
-    "type": "Emphasis",
-    "value": "underscoreitalictext_",
+    "type": "Paragraph",
+    "value": "_underscoreitalictext__",
     "position": {
       "start": {
         "line": 133,
         "column": 1,
-        "offset": 1656
+        "offset": 1888
       },
       "end": {
         "line": 133,
         "column": 24,
-        "offset": 1679
+        "offset": 1911
       }
     },
     "range": [
-      1656,
-      1679
+      1888,
+      1911
     ]
   },
   {
-    "type": "Text",
+    "type": "Paragraph",
     "value": "_text",
     "position": {
       "start": {
         "line": 135,
         "column": 1,
-        "offset": 1681
+        "offset": 1913
       },
       "end": {
         "line": 135,
         "column": 6,
-        "offset": 1686
+        "offset": 1918
       }
     },
     "range": [
-      1681,
-      1686
+      1913,
+      1918
     ]
   },
   {
-    "type": "Text",
+    "type": "Paragraph",
     "value": "text_",
     "position": {
       "start": {
         "line": 137,
         "column": 1,
-        "offset": 1688
+        "offset": 1920
       },
       "end": {
         "line": 137,
         "column": 6,
-        "offset": 1693
+        "offset": 1925
       }
     },
     "range": [
-      1688,
-      1693
+      1920,
+      1925
     ]
   },
   {
@@ -1398,31 +1338,30 @@ const expectedTokens = [
       "start": {
         "line": 139,
         "column": 1,
-        "offset": 1695
+        "offset": 1927
       },
       "end": {
         "line": 139,
         "column": 32,
-        "offset": 1726
+        "offset": 1958
       }
     },
     "range": [
-      1695,
-      1726
+      1927,
+      1958
     ],
     "tagName": "div",
     "isVoidElement": false
   }
 ];
 
-const root = parse(input);
+const tokens = tokenize(input);
 
 try {
-  strictEqual(JSON.stringify(root.tokens), JSON.stringify(expectedTokens));
+  strictEqual(JSON.stringify(tokens), JSON.stringify(expectedTokens));
   console.log('All tests passed!');
 } catch (error) {
   console.error('Error:', error);
 }
 
-writeFileSync('ast.json', JSON.stringify(root, undefined, 2));
-writeFileSync('tokens.json', JSON.stringify(root.tokens, undefined, 2));
+writeFileSync('tokens.json', JSON.stringify(tokens, undefined, 2));
