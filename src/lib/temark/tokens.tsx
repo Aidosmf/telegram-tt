@@ -53,7 +53,6 @@ export interface TokenHtml extends TokenBase {
 
 export interface TokenImage extends TokenBase {
   type: 'Image';
-  url?: string;
 }
 
 export interface TokenInlineCode extends TokenBase {
@@ -62,7 +61,6 @@ export interface TokenInlineCode extends TokenBase {
 
 export interface TokenLink extends TokenBase {
   type: 'Link';
-  url?: string;
 }
 
 export interface TokenStrike extends TokenBase {
@@ -304,6 +302,7 @@ export class Tokenizer {
     }
 
     if (close === 1) {
+      // TODO: avoid unshift
       if (delimeterLimit >= 3) this.value.unshift(delimeterValue, delimeterValue);
 
       return this.createToken('InlineCode', start, this.reader.getPoint());
@@ -365,7 +364,6 @@ export class Tokenizer {
   }
 
   // Image: ![alt](url)
-  // TODO: add url param
   private readImage(c: number, start: Point): Token {
     if (this.reader.peek() !== CC.CHAR_SQUARE_BRACKET_OPEN) return this.readText(c, start);
 
@@ -470,6 +468,7 @@ export class Tokenizer {
     }
 
     if (close === 1) {
+      // TODO: avoid unshift
       this.value.unshift(delimiterValue);
       return this.createToken('Emphasis', start);
     }
@@ -564,6 +563,7 @@ export class Tokenizer {
     }
 
     if (close === 0) {
+      // TODO: avoid unshift
       this.value.unshift(delimiterValue);
       return this.readText(c, start);
     }

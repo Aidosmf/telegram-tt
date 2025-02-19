@@ -62,6 +62,8 @@ export interface Link extends Parent {
  */
 export interface Html extends Literal {
   type: 'html';
+  tagName: string;
+  isVoidElement: boolean;
 }
 
 /**

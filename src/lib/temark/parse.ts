@@ -16,7 +16,9 @@ import type {
   Text,
 } from './mdast';
 
-import { type Token, TOKEN_TYPE as TT, Tokenizer } from './tokens';
+import {
+  type Token, TOKEN_TYPE as TT, type TokenHtml, Tokenizer, type TokenLink,
+} from './tokens';
 
 export type Options = {
   /**
@@ -135,17 +137,22 @@ export class Parser {
     };
   }
 
+  static parseRichText(token: Token): PhrasingContent {
+    // TODO: use token_type
+    switch (token.type) {
+      case 'Emphasis': return Parser.parseEmphasis(token);
+      case 'InlineCode': return Parser.parseInlineCode(token);
+      case 'Strike': return Parser.parseStrike(token);
+      case 'Strong': return Parser.parseStrong(token);
+      case 'Link': return Parser.parseLink(token);
+      default: return Parser.parseText(token);
+    }
+  }
+
   static parseParagraph(token: Token): Paragraph {
     const children: PhrasingContent[] = [];
 
-    switch (token.type) {
-      case 'Emphasis': children.push(Parser.parseEmphasis(token)); break;
-      case 'InlineCode': children.push(Parser.parseInlineCode(token)); break;
-      case 'Strike': children.push(Parser.parseStrike(token)); break;
-      case 'Strong': children.push(Parser.parseStrong(token)); break;
-      case 'Link': children.push(Parser.parseLink(token)); break;
-      default: children.push(Parser.parseText(token)); break;
-    }
+    children.push(Parser.parseRichText(token));
 
     return {
       type: 'paragraph',
@@ -189,7 +196,7 @@ export class Parser {
     };
   }
 
-  static parseLink(token: Token): Link {
+  static parseLink(token: TokenLink): Link {
     const { value, position } = token;
     const text = [];
     const url: string[] = [];
@@ -267,10 +274,12 @@ export class Parser {
     };
   }
 
-  static parseHtml(token: Token): Html {
+  static parseHtml(token: TokenHtml): Html {
     return {
       type: 'html',
       value: token.value,
+      tagName: token?.tagName || '',
+      isVoidElement: token.isVoidElement || false,
       position: token.position,
     };
   }
