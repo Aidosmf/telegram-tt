@@ -173,7 +173,8 @@ const expectedTokens = [
     "range": [
       0,
       6
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Link",
@@ -181,7 +182,7 @@ const expectedTokens = [
     "position": {
       "start": {
         "line": 3,
-        "column": 1,
+        "column": 3,
         "offset": 8
       },
       "end": {
@@ -213,7 +214,9 @@ const expectedTokens = [
     "range": [
       45,
       126
-    ]
+    ],
+    "tagName": "a",
+    "isVoidElement": false
   },
   {
     "type": "Heading",
@@ -233,7 +236,8 @@ const expectedTokens = [
     "range": [
       128,
       135
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Image",
@@ -273,7 +277,9 @@ const expectedTokens = [
     "range": [
       189,
       257
-    ]
+    ],
+    "tagName": "img",
+    "isVoidElement": true
   },
   {
     "type": "Heading",
@@ -293,7 +299,8 @@ const expectedTokens = [
     "range": [
       260,
       268
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Strike",
@@ -353,7 +360,9 @@ const expectedTokens = [
     "range": [
       303,
       331
-    ]
+    ],
+    "tagName": "del",
+    "isVoidElement": false
   },
   {
     "type": "Heading",
@@ -373,7 +382,8 @@ const expectedTokens = [
     "range": [
       333,
       348
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Strong",
@@ -413,7 +423,9 @@ const expectedTokens = [
     "range": [
       378,
       393
-    ]
+    ],
+    "tagName": "b",
+    "isVoidElement": false
   },
   {
     "type": "Strong",
@@ -453,7 +465,8 @@ const expectedTokens = [
     "range": [
       418,
       437
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Emphasis",
@@ -513,7 +526,9 @@ const expectedTokens = [
     "range": [
       489,
       498
-    ]
+    ],
+    "tagName": "em",
+    "isVoidElement": false
   },
   {
     "type": "Heading",
@@ -533,7 +548,8 @@ const expectedTokens = [
     "range": [
       500,
       511
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Html",
@@ -553,7 +569,9 @@ const expectedTokens = [
     "range": [
       513,
       538
-    ]
+    ],
+    "tagName": "u",
+    "isVoidElement": false
   },
   {
     "type": "Html",
@@ -573,7 +591,9 @@ const expectedTokens = [
     "range": [
       540,
       611
-    ]
+    ],
+    "tagName": "span",
+    "isVoidElement": false
   },
   {
     "type": "Html",
@@ -593,7 +613,9 @@ const expectedTokens = [
     "range": [
       613,
       644
-    ]
+    ],
+    "tagName": "ins",
+    "isVoidElement": false
   },
   {
     "type": "Heading",
@@ -613,7 +635,8 @@ const expectedTokens = [
     "range": [
       646,
       652
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Html",
@@ -633,7 +656,9 @@ const expectedTokens = [
     "range": [
       654,
       682
-    ]
+    ],
+    "tagName": "custom",
+    "isVoidElement": false
   },
   {
     "type": "Html",
@@ -653,7 +678,9 @@ const expectedTokens = [
     "range": [
       684,
       917
-    ]
+    ],
+    "tagName": "b",
+    "isVoidElement": false
   },
   {
     "type": "Html",
@@ -673,7 +700,9 @@ const expectedTokens = [
     "range": [
       919,
       958
-    ]
+    ],
+    "tagName": "div",
+    "isVoidElement": false
   },
   {
     "type": "Heading",
@@ -693,7 +722,8 @@ const expectedTokens = [
     "range": [
       960,
       972
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Blockquote",
@@ -853,7 +883,8 @@ const expectedTokens = [
     "range": [
       1099,
       1105
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Text",
@@ -933,7 +964,8 @@ const expectedTokens = [
     "range": [
       1131,
       1137
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "InlineCode",
@@ -1113,7 +1145,9 @@ const expectedTokens = [
     "range": [
       1349,
       1489
-    ]
+    ],
+    "tagName": "pre",
+    "isVoidElement": false
   },
   {
     "type": "Heading",
@@ -1133,7 +1167,8 @@ const expectedTokens = [
     "range": [
       1491,
       1498
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Strong",
@@ -1193,7 +1228,8 @@ const expectedTokens = [
     "range": [
       1548,
       1561
-    ]
+    ],
+    "depth": 1
   },
   {
     "type": "Text",
@@ -1216,8 +1252,8 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Emphasis",
-    "value": "starwithtext\n\n*",
+    "type": "Text",
+    "value": "*starwithtext",
     "position": {
       "start": {
         "line": 125,
@@ -1225,34 +1261,34 @@ const expectedTokens = [
         "offset": 1578
       },
       "end": {
-        "line": 127,
-        "column": 3,
-        "offset": 1595
+        "line": 125,
+        "column": 14,
+        "offset": 1591
       }
     },
     "range": [
       1578,
-      1595
+      1591
     ]
   },
   {
-    "type": "Text",
-    "value": "extstaritalic*",
+    "type": "Emphasis",
+    "value": "*textstaritalic",
     "position": {
       "start": {
         "line": 127,
-        "column": 4,
-        "offset": 1596
+        "column": 1,
+        "offset": 1593
       },
       "end": {
         "line": 127,
-        "column": 18,
-        "offset": 1610
+        "column": 16,
+        "offset": 1608
       }
     },
     "range": [
-      1596,
-      1610
+      1593,
+      1608
     ]
   },
   {
@@ -1276,8 +1312,8 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Text",
-    "value": "textunderscoreitalic_\n",
+    "type": "Emphasis",
+    "value": "_textunderscoreitalic",
     "position": {
       "start": {
         "line": 131,
@@ -1286,13 +1322,13 @@ const expectedTokens = [
       },
       "end": {
         "line": 131,
-        "column": 23,
-        "offset": 1653
+        "column": 22,
+        "offset": 1652
       }
     },
     "range": [
       1631,
-      1653
+      1652
     ]
   },
   {
@@ -1316,13 +1352,33 @@ const expectedTokens = [
     ]
   },
   {
-    "type": "Emphasis",
-    "value": "text\n\ntext",
+    "type": "Text",
+    "value": "_text",
     "position": {
       "start": {
         "line": 135,
         "column": 1,
         "offset": 1681
+      },
+      "end": {
+        "line": 135,
+        "column": 6,
+        "offset": 1686
+      }
+    },
+    "range": [
+      1681,
+      1686
+    ]
+  },
+  {
+    "type": "Text",
+    "value": "text_",
+    "position": {
+      "start": {
+        "line": 137,
+        "column": 1,
+        "offset": 1688
       },
       "end": {
         "line": 137,
@@ -1331,7 +1387,7 @@ const expectedTokens = [
       }
     },
     "range": [
-      1681,
+      1688,
       1693
     ]
   },
@@ -1353,18 +1409,20 @@ const expectedTokens = [
     "range": [
       1695,
       1726
-    ]
+    ],
+    "tagName": "div",
+    "isVoidElement": false
   }
 ];
 
 const root = parse(input);
 
-// try {
-//   strictEqual(root.tokens, expectedTokens);
-//   console.log('All tests passed!');
-// } catch (error) {
-//   console.error('Error:', error);
-// }
+try {
+  strictEqual(JSON.stringify(root.tokens), JSON.stringify(expectedTokens));
+  console.log('All tests passed!');
+} catch (error) {
+  console.error('Error:', error);
+}
 
-// writeFileSync('ast.json', JSON.stringify(root, undefined, 2));
+writeFileSync('ast.json', JSON.stringify(root, undefined, 2));
 writeFileSync('tokens.json', JSON.stringify(root.tokens, undefined, 2));

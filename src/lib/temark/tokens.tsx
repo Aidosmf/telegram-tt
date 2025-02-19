@@ -424,13 +424,65 @@ export class Tokenizer {
   }
 
   // Strong: text wrapped in double '*' or '_'
-  // Strike: text wrapped in double '~'
-  private readPairedDelimeter(
+  private readStrong(
     c: number,
     start: Point,
     tokenType: TokenType,
-    delimiterLimit: number,
   ): Token {
+    const delimiterLimit = 2;
+    const delimiterCode = c;
+    const delimiterValue = String.fromCharCode(delimiterCode);
+
+    let open = delimiterLimit;
+    c = this.reader.next();
+
+    while (c !== 1 && this.reader.peek() === delimiterCode) {
+      c = this.reader.next();
+      open++;
+
+      if (open > delimiterLimit) {
+        this.value.push(delimiterValue);
+        open--;
+      }
+    }
+
+    if (c === CC.CHAR_RETURN) {
+      return this.createToken('Text', start);
+    }
+
+    c = this.reader.next();
+
+    while (c !== 1 && c !== delimiterCode) {
+      this.value.push(String.fromCharCode(c));
+      c = this.reader.next();
+    }
+
+    let close = 0;
+
+    while (c !== 1 && c === delimiterCode) {
+      c = this.reader.next();
+      close += 1;
+
+      if (close > delimiterLimit) {
+        this.value.push(delimiterValue);
+        close--;
+      }
+    }
+
+    if (close === 1) {
+      this.value.unshift(delimiterValue);
+      return this.createToken('Emphasis', start);
+    }
+
+    return this.createToken(tokenType, start, this.reader.getPoint());
+  }
+
+  // Strike: text wrapped in double '~'
+  private readStrike(
+    c: number,
+    start: Point,
+  ): Token {
+    const delimiterLimit = 2;
     const delimiterCode = c;
     const delimiterValue = String.fromCharCode(delimiterCode);
 
@@ -475,17 +527,29 @@ export class Tokenizer {
       close--;
     }
 
-    return this.createToken(tokenType, start, this.reader.getPoint());
+    return this.createToken('Strike', start, this.reader.getPoint());
   }
 
   // Emphasis: text wrapped in a single '*' or '_'
   private readEmphasis(c: number, start: Point): Token {
+    if (c !== CC.CHAR_ASTERISK && c !== CC.CHAR_UNDERSCORE) return this.readText(c, start);
+
     const tokenType = 'Emphasis';
     const delimiterCode = c;
     const delimiterLimit = 1;
     const delimiterValue = String.fromCharCode(delimiterCode);
 
-    c = this.reader.next();
+    let open = 0;
+
+    while (c !== 1 && c === delimiterCode) {
+      c = this.reader.next();
+      open++;
+
+      if (open > delimiterLimit) {
+        this.value.push(delimiterValue);
+        open--;
+      }
+    }
 
     while (c !== 1 && c !== delimiterCode && !this.reader.isNewLine) {
       this.value.push(String.fromCharCode(c));
@@ -499,7 +563,7 @@ export class Tokenizer {
       close += 1;
     }
 
-    if (close !== delimiterLimit) {
+    if (close === 0) {
       this.value.unshift(delimiterValue);
       return this.readText(c, start);
     }
@@ -537,15 +601,15 @@ export class Tokenizer {
       case CC.CHAR_SQUARE_BRACKET_OPEN: return this.readLink(c, start);
       case CC.CHAR_LESS_THAN: return this.readHtml(c, start);
       case CC.CHAR_ASTERISK:
-        if (peek === c) return this.readPairedDelimeter(c, start, 'Strong', 2);
+        if (peek === c) return this.readStrong(c, start, 'Strong');
 
         return this.readEmphasis(c, start);
       case CC.CHAR_UNDERSCORE:
-        if (peek === c) return this.readPairedDelimeter(c, start, 'Strong', 2);
+        if (peek === c) return this.readStrong(c, start, 'Strong');
 
         return this.readEmphasis(c, start);
       case CC.CHAR_TILDE:
-        if (peek === CC.CHAR_TILDE) return this.readPairedDelimeter(c, start, 'Strike', 2);
+        if (peek === CC.CHAR_TILDE) return this.readStrike(c, start);
 
         return this.readText(c, start);
       default:
