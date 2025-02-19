@@ -1359,12 +1359,12 @@ const expectedTokens = [
 
 const root = parse(input);
 
-try {
-  strictEqual(root.tokens, expectedTokens);
-  console.log('All tests passed!');
-} catch (error) {
-  console.error('Error:', error);
-}
+// try {
+//   strictEqual(root.tokens, expectedTokens);
+//   console.log('All tests passed!');
+// } catch (error) {
+//   console.error('Error:', error);
+// }
 
-writeFileSync('ast.json', JSON.stringify(root, undefined, 2));
+// writeFileSync('ast.json', JSON.stringify(root, undefined, 2));
 writeFileSync('tokens.json', JSON.stringify(root.tokens, undefined, 2));

@@ -253,7 +253,7 @@ export class Tokenizer {
     const desiredClosing = `</${tagName}>`;
     let buffer = '';
 
-    while (true) {
+    while (c !== 1) {
       c = this.reader.next();
       if (c === -1) break;
       const ch = String.fromCharCode(c);
@@ -487,7 +487,7 @@ export class Tokenizer {
 
     c = this.reader.next();
 
-    while (c !== 1 && c !== delimiterCode) {
+    while (c !== 1 && c !== delimiterCode && !this.reader.isNewLine) {
       this.value.push(String.fromCharCode(c));
       c = this.reader.next();
     }
@@ -499,8 +499,8 @@ export class Tokenizer {
       close += 1;
     }
 
-    if (close === delimiterCode - 1) {
-      this.value.push(delimiterValue);
+    if (close !== delimiterLimit) {
+      this.value.unshift(delimiterValue);
       return this.readText(c, start);
     }
 
@@ -513,18 +513,13 @@ export class Tokenizer {
   }
 
   private readText(c: number, start: Point): Token {
-    this.value.push(String.fromCharCode(c));
-    let peek = this.reader.peek();
-
     while (
-      peek !== -1
-      && peek !== CC.CHAR_RETURN
-      && peek !== CC.CHAR_NEWLINE
+      c !== -1
+      && c !== CC.CHAR_NEWLINE
+      && c !== CC.CHAR_RETURN
     ) {
-      c = this.reader.next();
-      if (c === -1) break;
       this.value.push(String.fromCharCode(c));
-      peek = this.reader.peek();
+      c = this.reader.next();
     }
 
     return this.createToken('Text', start);
