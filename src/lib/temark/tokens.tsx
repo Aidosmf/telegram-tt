@@ -245,8 +245,13 @@ export class Tokenizer {
 
       return this.createToken('Text', start, this.reader.getPoint());
     }
+    const end = this.reader.getPoint();
 
-    return this.createToken('Code', start, this.reader.getPoint());
+    if (start.line === end.line) {
+      return this.createToken('InlineCode', start, this.reader.getPoint());
+    } else {
+      return this.createToken('Code', start, this.reader.getPoint());
+    }
   }
 
   // Link: [text](url)
