@@ -336,7 +336,6 @@ export class Tokenizer {
     this.value.push(String.fromCharCode(c)); // [
     c = this.reader.next();
 
-
     while (c !== -1 && c !== CC.CHAR_SQUARE_BRACKET_CLOSE) {
       this.value.push(String.fromCharCode(c)); // text
       c = this.reader.next();

@@ -65,13 +65,13 @@ export class Parser {
 
     const lastChild = children[children.length - 1];
 
-    const position = {
+    const rootPosition = {
       start: {
         line: 1,
         column: 1,
         offset: 0,
       },
-      end: lastChild ? lastChild.position.end : {
+      end: lastChild ? { ...lastChild.position.end } : {
         line: 1,
         column: 1,
         offset: 0,
@@ -83,7 +83,7 @@ export class Parser {
     return {
       type: 'root',
       children,
-      position,
+      position: rootPosition,
       ...tokensParts,
     };
   }
@@ -104,31 +104,25 @@ export class Parser {
     }
   }
 
-  static parseBlockquote(token: Token, idx: number = 0): Blockquote {
-    const { value, position } = token;
+  static parseBlockquote(token: Token): Blockquote {
+    const { value, position, range } = token;
     const children: FlowContent[] = [];
 
-    for (let i = idx; i < value.length; i++) {
-      const char = value[i];
-
-      if (char === '>') {
-        children.push(Parser.parseBlockquote(token, i + 1));
-      } else if (char === '\n') {
-        children.push(Parser.parseParagraph({
-          type: 'Text',
-          value: value.slice(idx, i),
-          position: {
-            start: position.start,
-            end: {
-              line: position.start.line + 1,
-              column: 1,
-              offset: position.start.offset + i,
-            },
-          },
-          range: [idx, i],
-        }));
-      }
-    }
+    children.push(Parser.parseParagraph({
+      type: 'Text',
+      value: value.slice(1, value.length),
+      position: {
+        start: {
+          line: position.start.line,
+          column: position.start.column + 1,
+          offset: position.start.offset + 1,
+        },
+        end: {
+          ...position.end,
+        },
+      },
+      range,
+    }));
 
     return {
       type: 'blockquote',
@@ -157,7 +151,9 @@ export class Parser {
     return {
       type: 'paragraph',
       children,
-      position: token.position,
+      position: {
+        ...token.position,
+      },
     };
   }
 
@@ -165,7 +161,9 @@ export class Parser {
     return {
       type: 'text',
       value: token.value,
-      position: token.position,
+      position: {
+        ...token.position,
+      },
     };
   }
 
@@ -176,15 +174,19 @@ export class Parser {
       children: [Parser.parseText({
         type: 'Text',
         value: token.value,
-        position: token.position,
+        position: {
+          ...token.position,
+        },
         range: [idx, token.value.length],
       })],
-      position: token.position,
+      position: {
+        ...token.position,
+      },
     };
   }
 
   static parseInlineCode(token: Token, idx: number = 0): InlineCode {
-    const { value, position } = token;
+    const { value } = token;
 
     const end = value.indexOf('`', idx);
     const code = value.slice(idx, end);
@@ -192,7 +194,9 @@ export class Parser {
     return {
       type: 'inlineCode',
       value: code,
-      position,
+      position: {
+        ...token.position,
+      },
     };
   }
 
@@ -225,7 +229,9 @@ export class Parser {
         type: 'Text',
         value: textValue,
         position: {
-          start: position.start,
+          start: {
+            ...position.start,
+          },
           end: {
             line: position.start.line,
             column: position.start.column + value.length,
