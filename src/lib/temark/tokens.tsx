@@ -333,34 +333,36 @@ export class Tokenizer {
 
   // Link: [text](url)
   private readLink(c: number, start: Point): Token {
-    this.value.push(String.fromCharCode(c));
+    this.value.push(String.fromCharCode(c)); // [
     c = this.reader.next();
 
+
     while (c !== -1 && c !== CC.CHAR_SQUARE_BRACKET_CLOSE) {
+      this.value.push(String.fromCharCode(c)); // text
+      c = this.reader.next();
+    }
+
+    if (c === -1) return this.createToken('Text', start, this.reader.getPoint());
+
+    this.value.push(String.fromCharCode(c)); // ]
+    c = this.reader.next();
+
+    if (c !== CC.CHAR_PARENTHESIS_OPEN) this.createToken('Text', start, this.reader.getPoint());
+
+    this.value.push(String.fromCharCode(c)); // (
+    c = this.reader.next();
+
+    while (c !== -1 && c !== CC.CHAR_PARENTHESIS_CLOSE) {
       this.value.push(String.fromCharCode(c));
       c = this.reader.next();
     }
 
-    if (c !== -1) {
-      this.value.push(String.fromCharCode(c));
-    }
+    if (c === -1) return this.createToken('Text', start, this.reader.getPoint());
 
-    if (this.reader.peek() === CC.CHAR_PARENTHESIS_OPEN) {
-      c = this.reader.next();
-      this.value.push(String.fromCharCode(c));
-      c = this.reader.next();
+    this.value.push(String.fromCharCode(c)); // )
+    c = this.reader.next();
 
-      while (c !== -1 && c !== CC.CHAR_PARENTHESIS_CLOSE) {
-        this.value.push(String.fromCharCode(c));
-        c = this.reader.next();
-      }
-
-      if (c !== -1) {
-        this.value.push(String.fromCharCode(c));
-      }
-    }
-
-    return this.createToken('Link', start);
+    return this.createToken('Link', start, this.reader.getPoint());
   }
 
   // Image: ![alt](url)

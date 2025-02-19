@@ -200,7 +200,6 @@ export class Parser {
     const { value, position } = token;
     const text = [];
     const url: string[] = [];
-    const currPosition = { ...position };
 
     let i = 0;
     while (i < value.length) {
@@ -216,7 +215,6 @@ export class Parser {
         i = end;
       }
 
-      currPosition.start.column++;
       i++;
     }
 

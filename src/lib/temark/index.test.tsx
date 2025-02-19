@@ -182,7 +182,7 @@ const expectedTokens = [
     "position": {
       "start": {
         "line": 3,
-        "column": 3,
+        "column": 1,
         "offset": 8
       },
       "end": {
