@@ -10,8 +10,7 @@ export type TokenType =
   | 'Code'
   | 'Heading'
   | 'Html'
-  | 'Paragraph'
-  | 'Text';
+  | 'Paragraph';
 
 export type Range = [number, number];
 
@@ -41,10 +40,6 @@ export interface TokenHtml extends TokenBase {
   isVoidElement?: boolean;
 }
 
-export interface TokenText extends TokenBase {
-  type: 'Text';
-}
-
 export interface TokenParagraph extends TokenBase {
   type: 'Paragraph';
 }
@@ -54,8 +49,7 @@ export type Token =
   | TokenCode
   | TokenHeading
   | TokenHtml
-  | TokenParagraph
-  | TokenText;
+  | TokenParagraph;
 
 export const TOKEN_TYPE = {
   EOF: 0,
@@ -63,8 +57,7 @@ export const TOKEN_TYPE = {
   Blockquote: 2,
   Code: 3,
   Html: 4,
-  Text: 5,
-  Paragraph: 6,
+  Paragraph: 5,
 };
 
 export const WHITESPACES = new Set([
@@ -82,7 +75,7 @@ export class Tokenizer {
   private value: string[] = [];
 
   private t: Token = {
-    type: 'Text',
+    type: 'Paragraph',
     value: '',
     position: {
       start: { line: 1, column: 1, offset: 0 },

@@ -12,7 +12,8 @@ export type Literal = UnistLiteral;
  */
 export interface Blockquote extends Parent {
   type: 'blockquote';
-  children: Array<FlowContent>;
+  // children: Array<FlowContent>;
+  children: Array<PhrasingContent>;
 }
 
 /**
