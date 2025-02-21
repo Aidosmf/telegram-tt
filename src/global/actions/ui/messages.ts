@@ -18,7 +18,7 @@ import { getCurrentTabId } from '../../../util/establishMultitabRole';
 import { compact, findLast } from '../../../util/iteratees';
 import * as langProvider from '../../../util/oldLangProvider';
 import { oldTranslate } from '../../../util/oldLangProvider';
-import parseHtmlAsFormattedText from '../../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../../util/parseHtmlAsFormattedText2';
 import { getServerTime } from '../../../util/serverTime';
 import { IS_TOUCH_ENV } from '../../../util/windowEnvironment';
 import versionNotification from '../../../versionNotification.txt';

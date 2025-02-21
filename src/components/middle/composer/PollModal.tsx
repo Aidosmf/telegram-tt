@@ -8,7 +8,7 @@ import type { ApiNewPoll } from '../../../api/types';
 
 import { requestMeasure, requestNextMutation } from '../../../lib/fasterdom/fasterdom';
 import captureEscKeyListener from '../../../util/captureEscKeyListener';
-import parseHtmlAsFormattedText from '../../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../../util/parseHtmlAsFormattedText2';
 
 import useLastCallback from '../../../hooks/useLastCallback';
 import useOldLang from '../../../hooks/useOldLang';

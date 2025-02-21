@@ -13,6 +13,10 @@
 export interface Node {
   type: string;
   position: Position;
+  /**
+   * start and end offsets in the text document.
+   */
+  range: [number, number];
 }
 
 /**

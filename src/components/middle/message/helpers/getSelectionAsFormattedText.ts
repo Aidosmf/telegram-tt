@@ -1,7 +1,7 @@
 import type { ApiFormattedText } from '../../../../api/types';
 import { ApiMessageEntityTypes } from '../../../../api/types';
 
-import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText2';
 
 const div = document.createElement('div');
 const ALLOWED_QUOTE_ENTITIES = new Set([

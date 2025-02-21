@@ -1,5 +1,6 @@
 import type { ApiFormattedText, ApiMessageEntity } from '../api/types';
 import { ApiMessageEntityTypes } from '../api/types';
+import { parse as myParseMarkdown } from '../lib/temark';
 import { RE_LINK_TEMPLATE } from '../config';
 import { IS_EMOJI_SUPPORTED } from './windowEnvironment';
 
@@ -23,6 +24,7 @@ const MAX_TAG_DEEPNESS = 3;
 export default function parseHtmlAsFormattedText(
   html: string, withMarkdownLinks = false, skipMarkdown = false,
 ): ApiFormattedText {
+
   const fragment = document.createElement('div');
   fragment.innerHTML = skipMarkdown ? html
     : withMarkdownLinks ? parseMarkdown(parseMarkdownLinks(html)) : parseMarkdown(html);
@@ -32,6 +34,7 @@ export default function parseHtmlAsFormattedText(
   let textIndex = -trimShift;
   let recursionDeepness = 0;
   const entities: ApiMessageEntity[] = [];
+
 
   function addEntity(node: ChildNode) {
     if (node.nodeType === Node.COMMENT_NODE) return;
@@ -80,7 +83,6 @@ export function fixImageContent(fragment: HTMLDivElement) {
 function parseMarkdown(html: string) {
   let parsedHtml = html.slice(0);
 
-  // const res = parseMarkdown(html);
 
   // Strip redundant nbsp's
   parsedHtml = parsedHtml.replace(/&nbsp;/g, ' ');
@@ -133,6 +135,10 @@ function parseMarkdown(html: string) {
     /(?!<(code|pre)[^<]*|<\/)[|]{2}([^|\n]+)[|]{2}(?![^<]*<\/(code|pre)>)/g,
     `<span data-entity-type="${ApiMessageEntityTypes.Spoiler}">$2</span>`,
   );
+
+  // console.log("MF", "Parsed Before", html);
+  // console.log("MF", "Parsed After", parsedHtml);
+  // console.log("MF", myParseMarkdown(html));
 
   return parsedHtml;
 }

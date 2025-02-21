@@ -13,7 +13,7 @@ import { ApiMessageEntityTypes } from '../../../api/types';
 import { RE_LINK_TEMPLATE } from '../../../config';
 import { selectNoWebPage, selectTabState, selectTheme } from '../../../global/selectors';
 import buildClassName from '../../../util/buildClassName';
-import parseHtmlAsFormattedText from '../../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../../util/parseHtmlAsFormattedText2';
 
 import { useDebouncedResolver } from '../../../hooks/useAsyncResolvers';
 import useContextMenuHandlers from '../../../hooks/useContextMenuHandlers';
@@ -185,7 +185,7 @@ const WebPagePreview: FC<OwnProps & StateProps> = ({
                 {lang('PreviewSender.MoveTextUp')}
               </MenuItem>
             ) : (
-            // eslint-disable-next-line react/jsx-no-bind
+              // eslint-disable-next-line react/jsx-no-bind
               <MenuItem icon="move-caption-down" onClick={() => updateIsInvertedMedia(true)}>
                 {lang(('PreviewSender.MoveTextDown'))}
               </MenuItem>
@@ -193,12 +193,12 @@ const WebPagePreview: FC<OwnProps & StateProps> = ({
           }
           {hasMediaSizeOptions && (
             isSmallerMedia ? (
-            // eslint-disable-next-line react/jsx-no-bind
+              // eslint-disable-next-line react/jsx-no-bind
               <MenuItem icon="expand" onClick={() => updateIsLargerMedia('large')}>
                 {lang('ChatInput.EditLink.LargerMedia')}
               </MenuItem>
             ) : (
-            // eslint-disable-next-line react/jsx-no-bind
+              // eslint-disable-next-line react/jsx-no-bind
               <MenuItem icon="collapse" onClick={() => updateIsLargerMedia('small')}>
                 {lang(('ChatInput.EditLink.SmallerMedia'))}
               </MenuItem>

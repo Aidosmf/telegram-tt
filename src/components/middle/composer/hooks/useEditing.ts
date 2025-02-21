@@ -10,7 +10,7 @@ import { EDITABLE_INPUT_CSS_SELECTOR } from '../../../../config';
 import { requestMeasure, requestNextMutation } from '../../../../lib/fasterdom/fasterdom';
 import { hasMessageMedia } from '../../../../global/helpers';
 import focusEditableElement from '../../../../util/focusEditableElement';
-import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText2';
 import { getTextWithEntitiesAsHtml } from '../../../common/helpers/renderTextWithEntities';
 
 import { useDebouncedResolver } from '../../../../hooks/useAsyncResolvers';

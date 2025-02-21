@@ -106,7 +106,7 @@ import deleteLastCharacterOutsideSelection from '../../util/deleteLastCharacterO
 import { processMessageInputForCustomEmoji } from '../../util/emoji/customEmojiManager';
 import focusEditableElement from '../../util/focusEditableElement';
 import { MEMO_EMPTY_ARRAY } from '../../util/memo';
-import parseHtmlAsFormattedText from '../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../util/parseHtmlAsFormattedText2';
 import { insertHtmlInSelection } from '../../util/selection';
 import { getServerTime } from '../../util/serverTime';
 import { IS_IOS, IS_VOICE_RECORDING_SUPPORTED } from '../../util/windowEnvironment';

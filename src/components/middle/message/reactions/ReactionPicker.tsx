@@ -26,7 +26,7 @@ import {
   selectTabState,
 } from '../../../../global/selectors';
 import buildClassName from '../../../../util/buildClassName';
-import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText2';
 import { REM } from '../../../common/helpers/mediaDimensions';
 import { buildCustomEmojiHtml } from '../../composer/helpers/customEmoji';
 

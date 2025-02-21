@@ -1,4 +1,3 @@
-import type { Token } from './tokens';
 import type { Literal as UnistLiteral, Node as UnistNode, Parent as UnistParent } from './unist';
 
 export type Node = UnistNode;
@@ -11,7 +10,7 @@ export type Literal = UnistLiteral;
  * Note: Telegram macOS doesn't support blockquotes, only its own Quotes
  */
 export interface Blockquote extends Parent {
-  type: 'blockquote';
+  type: 'Blockquote';
   // children: Array<FlowContent>;
   children: Array<PhrasingContent>;
 }
@@ -25,44 +24,53 @@ export interface Blockquote extends Parent {
  * ----------------
  */
 export interface Code extends Literal {
-  type: 'code';
+  type: 'Code';
   lang: string | null;
 }
 
 /**
  * aka Italic
  *
- * Example: *text* or _text_ (standard)
+ * Example: __text__
  *
  * Note:
  * - Telegram macOS & Web K support double '_'
  */
 export interface Emphasis extends Parent {
-  type: 'emphasis';
+  type: 'Emphasis';
   children: PhrasingContent[];
 }
 
 /**
- * Example: ```inline code text```
+ * Example: `inline code text`
  */
 export interface InlineCode extends Literal {
-  type: 'inlineCode';
+  type: 'InlineCode';
 }
 
 /**
  * Example: [my.telegram.org](https://my.telegram.org)
  */
 export interface Link extends Parent {
-  type: 'link';
-  url: string;
+  type: 'Link';
+  url: string | null;
   children: PhrasingContent[];
+}
+
+/**
+ * Example: ![alpha](https://example.com/favicon.ico)
+ */
+export interface Image extends Node {
+  type: 'Image';
+  url: string | null;
+  alt: string;
 }
 
 /**
  * Example: <div>text</div>
  */
 export interface Html extends Literal {
-  type: 'html';
+  type: 'Html';
   tagName: string;
   isVoidElement: boolean;
 }
@@ -73,7 +81,7 @@ export interface Html extends Literal {
  *    paragraph2
  */
 export interface Paragraph extends Parent {
-  type: 'paragraph';
+  type: 'Paragraph';
   children: PhrasingContent[];
 }
 
@@ -85,25 +93,26 @@ export interface Paragraph extends Parent {
  * Note: Telegram macOS & Web K support double '~'
  */
 export interface Strike extends Parent {
-  type: 'strike';
+  type: 'Strike';
   children: PhrasingContent[];
 }
 
 /**
  * aka Bold
  *
- * Example: **text** or __text__
+ * Example: **text**
  *
  * Note:
  * - Telegram macOS & Web K support double '*'
  */
 export interface Strong extends Parent {
-  type: 'strong';
+  type: 'Strong';
   children: PhrasingContent[];
 }
 
 export interface Text extends Literal {
-  type: 'text';
+  type: 'Text';
+  value: string;
 }
 
 /**
@@ -112,7 +121,7 @@ export interface Text extends Literal {
  * Note: Telegram macOS & Web K do not support
  */
 export interface Heading extends Parent {
-  type: 'heading';
+  type: 'Heading';
   depth: 1 | 2 | 3 | 4 | 5 | 6;
   children: PhrasingContent[];
 }
@@ -121,17 +130,19 @@ export interface Heading extends Parent {
  * Represents a root document.
  */
 export interface Root extends Parent {
-  type: 'root';
-  tokens?: Token[];
+  type: 'Root';
+  tokens?: Node[];
   children: AnyNode[];
 }
 
 export type AnyNode =
+  | Root
   | Blockquote
   | Code
   | Emphasis
   | InlineCode
   | Link
+  | Image
   | Html
   | Paragraph
   | Strike
@@ -139,7 +150,7 @@ export type AnyNode =
   | Text
   | Heading;
 
-export type PhrasingContent = Emphasis | Html | InlineCode | Link | Strong | Text | Strike;
+export type PhrasingContent = Emphasis | Html | InlineCode | Link | Strong | Text | Strike | Image;
 
 export type FlowContent = Blockquote | Code | Heading | Html | Content;
 

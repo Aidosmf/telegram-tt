@@ -9,7 +9,7 @@ import {
 } from '../../../../config';
 import { canReplaceMessageMedia, isUploadingFileSticker } from '../../../../global/helpers';
 import { containsCustomEmoji, stripCustomEmoji } from '../../../../global/helpers/symbols';
-import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText2';
 import buildAttachment from '../helpers/buildAttachment';
 import { preparePastedHtml } from '../helpers/cleanHtml';
 import getFilesFromDataTransferItems from '../helpers/getFilesFromDataTransferItems';

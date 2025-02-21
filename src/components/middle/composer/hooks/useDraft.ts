@@ -10,7 +10,7 @@ import { DRAFT_DEBOUNCE } from '../../../../config';
 import {
   requestMeasure,
 } from '../../../../lib/fasterdom/fasterdom';
-import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText';
+import parseHtmlAsFormattedText from '../../../../util/parseHtmlAsFormattedText2';
 import { getTextWithEntitiesAsHtml } from '../../../common/helpers/renderTextWithEntities';
 
 import useLastCallback from '../../../../hooks/useLastCallback';
@@ -38,7 +38,7 @@ const useDraft = ({
   setHtml,
   editedMessage,
   isDisabled,
-} : {
+}: {
   draft?: ApiDraft;
   chatId: string;
   threadId: ThreadId;

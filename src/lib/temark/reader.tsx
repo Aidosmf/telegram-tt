@@ -38,6 +38,8 @@ export class Reader {
    */
   public isEnded = false;
 
+  private charString = '';
+
   /**
    * Creates a new instance.
    */
@@ -100,6 +102,7 @@ export class Reader {
 
     this.last = charCode;
 
+    this.charString = String.fromCharCode(charCode);
     return charCode;
   }
 
