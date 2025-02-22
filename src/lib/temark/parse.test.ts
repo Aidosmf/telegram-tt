@@ -158,7 +158,7 @@ text_
 <div broken open html tag<div>
 `;
 
-const input2 = `<img src="https://picsum.photos/id/237/200/300" alt="image html alt">`
+const input2 = `asd~~**__standard__**~~ads`;
 const rootNode = parse(input2);
 
 const filePath = './src/lib/temark/ast-test-result-file.json';

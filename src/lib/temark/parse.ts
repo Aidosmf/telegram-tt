@@ -353,11 +353,24 @@ export class Parser {
     };
   }
 
+  static getDelimeterNode(nodeType: NodeType, start: Point, end: Point, children: PhrasingContent[]): PhrasingContent {
+    // successful match
+    if (nodeType === 'Strong') {
+      return Parser.createStrongNode(start, end, children);
+    } else if (nodeType === 'Strike') {
+      return Parser.createStrikeNode(start, end, children);
+    } else if (nodeType === 'Emphasis') {
+      return Parser.createEmphasisNode(start, end, children);
+    } else {
+      throw new Error('Invalid nodeType');
+    }
+  }
+
   private parseDelimeter(
     c: number,
     start: Point,
     nodeType: PhrasingContent['type'],
-  ): PhrasingContent {
+  ): ParseRichTextResult {
     const delimeter = c;
     const delimeterString = String.fromCharCode(delimeter);
     const textBackup: string[] = [];
@@ -380,8 +393,8 @@ export class Parser {
     // if there is no openning delimeter
     if (delimeterCount < 2) {
       this.value.push(...textBackup); // push the rest
-
-      return this.createTextNode(start, this.r.getPoint());
+      c = this.r.next();
+      return this.parseText(c, start);
     }
 
     textBackup.push(delimeterString); // push the last delimeter
@@ -390,18 +403,22 @@ export class Parser {
     // successful match
     if (this.stack.length > 0 && this.stack[this.stack.length - 1] === doubledDelimeter) {
       this.stack.pop(); // clear previous delimeter
-      return this.createTextNode(start, this.r.getPoint());
+      if (this.value.length > 0) return this.createTextNode(start, this.r.getPoint());
+      return null;
     }
 
     this.stack.push(doubledDelimeter);
     c = this.r.next(); // skip opening delimeter
+
+    const prevNode = this.value.length > 0 ? this.createTextNode(start, this.r.getPoint()) : null;
 
     const children = this.getRichTextChildren(c, this.r.getPoint());
 
     if (children.length === 0) {
       this.value.push(...textBackup);
       this.stack.pop(); // open delimeter
-      return this.createTextNode(start, this.r.getPoint());
+      if (prevNode === null) return this.createTextNode(start, this.r.getPoint());
+      return Parser.returnMergedTextNode(prevNode as Text, this.createTextNode(start, this.r.getPoint()));
     }
 
     // unsuccessful match
@@ -413,17 +430,13 @@ export class Parser {
       return this.createTextNode(start, this.r.getPoint());
     }
 
-    const end = this.r.getPoint();
-
     // successful match
-    if (nodeType === 'Strong') {
-      return Parser.createStrongNode(start, end, children);
-    } else if (nodeType === 'Strike') {
-      return Parser.createStrikeNode(start, end, children);
-    } else if (nodeType === 'Emphasis') {
-      return Parser.createEmphasisNode(start, end, children);
+    const end = this.r.getPoint();
+    if (prevNode !== null) {
+      this.parseRichTextBuffer.push(Parser.getDelimeterNode(nodeType, start, end, children));
+      return prevNode;
     } else {
-      throw new Error('Invalid nodeType');
+      return Parser.getDelimeterNode(nodeType, start, end, children);
     }
   }
 
@@ -614,7 +627,7 @@ export class Parser {
   private getRichTextChildren(c: number, start: Point): PhrasingContent[] {
     const children: PhrasingContent[] = [];
 
-    while (c !== -1 && c !== CC.CHAR_NEWLINE) {
+    while (c !== -1 && c !== CC.CHAR_NEWLINE && c !== CC.CHAR_SPACE) {
       const richText = this.parseRichText(c, this.r.getPoint());
       if (richText) children.push(richText);
 
