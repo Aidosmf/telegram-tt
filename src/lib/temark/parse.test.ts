@@ -158,7 +158,6 @@ text_
 <div broken open html tag<div>
 `;
 
-// const input2 = `__**s**__`;
 const rootNode = parse(input);
 
 const filePath = './src/lib/temark/ast-test-result-file.json';

@@ -1565,7 +1565,7 @@
       "children": [
         {
           "type": "Text",
-          "value": "",
+          "value": "Code ",
           "position": {
             "start": {
               "line": 82,
@@ -1585,7 +1585,7 @@
         },
         {
           "type": "InlineCode",
-          "value": "Code `test",
+          "value": "test",
           "position": {
             "start": {
               "line": 82,
@@ -1594,13 +1594,13 @@
             },
             "end": {
               "line": 82,
-              "column": 11,
-              "offset": 1162
+              "column": 14,
+              "offset": 1165
             }
           },
           "range": [
             1152,
-            1162
+            1165
           ]
         }
       ],
@@ -2167,7 +2167,7 @@
                 },
                 {
                   "type": "Text",
-                  "value": "",
+                  "value": "printer took a galley of ",
                   "position": {
                     "start": {
                       "line": 116,
@@ -2187,7 +2187,7 @@
                 },
                 {
                   "type": "InlineCode",
-                  "value": "printer took a galley of `type",
+                  "value": "type",
                   "position": {
                     "start": {
                       "line": 116,
@@ -2195,14 +2195,14 @@
                       "offset": 1526
                     },
                     "end": {
-                      "line": 116,
-                      "column": 31,
-                      "offset": 1556
+                      "line": 118,
+                      "column": 72,
+                      "offset": 1762
                     }
                   },
                   "range": [
                     1526,
-                    1556
+                    1762
                   ]
                 },
                 {

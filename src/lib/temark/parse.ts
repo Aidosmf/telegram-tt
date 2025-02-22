@@ -143,27 +143,19 @@ export class Parser {
     };
   }
 
-  private createInlineCodeNode(
+  static createInlineCodeNode(
     startPoint: Point,
-    endPoint?: Point,
+    code: string[],
+    endPoint: Point,
   ): InlineCode {
-    const value = this.value.join('');
-    const length = value.length;
-    this.value = []; // reset
-
-    const endOffset = endPoint ? endPoint.offset : startPoint.offset + length;
-    const range: Range = [startPoint.offset, endOffset];
+    const range: Range = [startPoint.offset, endPoint.offset];
 
     return {
       type: 'InlineCode',
-      value,
+      value: code.join(''),
       position: {
         start: startPoint,
-        end: endPoint || {
-          line: startPoint.line,
-          column: startPoint.column + length,
-          offset: endOffset,
-        },
+        end: endPoint,
       },
       range,
     };
@@ -439,31 +431,23 @@ export class Parser {
     if (c !== CC.CHAR_BACKTICK) {
       throw new Error('Invalid c for parseInlineCode');
     }
-
     const delimeter = c;
     const delimterString = String.fromCharCode(delimeter);
-    const backupText = [delimterString];
-    c = this.r.next(); // skip opening backtick
+    const delimeters = [];
 
-    let delimeterCount = 1;
     while (c !== -1 && c === delimeter) {
-      this.value.push(delimterString);
+      delimeters.push(delimterString);
       c = this.r.next();
-      delimeterCount++;
-      if (delimeterCount > 1) {
-        backupText.push(delimterString);
-        delimeterCount -= 1;
-      }
     }
 
     if (c === -1) {
-      this.value.push(...backupText);
-      return this.createTextNode(start, this.r.getPoint());
+      this.value.push(...delimeters);
+      return this.parseText(c, start);
     }
 
-    if (delimeterCount < 1) {
-      this.value.push(...backupText);
-      return this.createTextNode(start, this.r.getPoint());
+    if (delimeters.length < 1) {
+      this.value.push(...delimeters);
+      return this.parseText(c, start);
     }
 
     const body = [];
@@ -472,17 +456,14 @@ export class Parser {
       c = this.r.next();
     }
 
-    if (c === -1) {
-      this.value.push(...backupText);
+    if (c !== delimeter) {
+      this.value.push(...delimeters);
       this.value.push(body.join(''));
-      return this.createTextNode(start, this.r.getPoint());
+      return this.parseText(c, start);
     }
 
-    this.value.push(...backupText);
-    this.value.push(body.join(''));
     c = this.r.next(); // skip closing backtick
-
-    return this.createInlineCodeNode(start);
+    return Parser.createInlineCodeNode(start, body, this.r.getPoint());
   }
 
   private parseLink(c: number, start: Point): ParseRichTextResult {
@@ -667,7 +648,7 @@ export class Parser {
     }
 
     const children = this.getRichTextChildren(c, start);
-
+    // const children = [this.createTextNode(start, this.r.getPoint())];
     return Parser.createHeadingNode(start, this.r.getPoint(), depth.length as Heading['depth'], children);
   }
 
