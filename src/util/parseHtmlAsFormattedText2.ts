@@ -52,6 +52,9 @@ function getFormattedText(astRoot: Root): {
     },
   });
 
+  console.log('MF', 'text:', text);
+  console.log('MF', 'entities:', entities);
+
   return {
     text: text.join(''),
     entities: entities.length ? entities : undefined,
@@ -79,10 +82,47 @@ function getEntityDataFromNode(
   node: AnyNode,
 ): { value: string; entity: ApiMessageEntity | undefined } {
   switch (node.type) {
+    // get from parent instead
     case 'Text': return { value: node.value, entity: undefined };
     case 'Link': return getEntityFromLinkNode(node);
     case 'Html': return getEntityFromHtmlNode(node);
-    case 'Code': {
+    case 'Strong': {
+      const value = node.children.find((child) => child.type === 'Text')?.value || '';
+
+      return {
+        value,
+        entity: {
+          type: ApiMessageEntityTypes.Bold,
+          offset: node.position.start.offset,
+          length: node.position.end.offset - node.position.start.offset,
+        },
+      };
+    }
+    case 'Strike': {
+      const value = node.children.find((child) => child.type === 'Text')?.value || '';
+
+      return {
+        value,
+        entity: {
+          type: ApiMessageEntityTypes.Strike,
+          offset: node.position.start.offset,
+          length: node.position.end.offset - node.position.start.offset,
+        },
+      };
+    }
+    case 'Emphasis': {
+      const value = node.children.find((child) => child.type === 'Text')?.value || '';
+
+      return {
+        value,
+        entity: {
+          type: ApiMessageEntityTypes.Italic,
+          offset: node.position.start.offset,
+          length: node.position.end.offset - node.position.start.offset,
+        },
+      };
+    }
+    case 'InlineCode': {
       return {
         value: node.value,
         entity: {
@@ -90,7 +130,17 @@ function getEntityDataFromNode(
           offset: node.position.start.offset,
           length: node.position.end.offset - node.position.start.offset,
         },
-      }
+      };
+    }
+    case 'Code': {
+      return {
+        value: node.value,
+        entity: {
+          type: ApiMessageEntityTypes.Pre,
+          offset: node.position.start.offset,
+          length: node.position.end.offset - node.position.start.offset,
+        },
+      };
     }
     default: {
       return {

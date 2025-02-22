@@ -47,6 +47,7 @@ export interface Emphasis extends Parent {
  */
 export interface InlineCode extends Literal {
   type: 'InlineCode';
+  value: string;
 }
 
 /**
