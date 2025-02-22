@@ -86,10 +86,51 @@
       ]
     },
     {
-      "type": "Html",
-      "value": "<a href=\"https://telegram.org/\" class=\"text-entity-link\" dir=\"auto\">link html</a>",
-      "tagName": "a",
-      "isVoidElement": false,
+      "type": "Paragraph",
+      "children": [
+        {
+          "type": "Link",
+          "children": [
+            {
+              "type": "Text",
+              "value": "[Email me](mailto:someone@example.com",
+              "position": {
+                "start": {
+                  "line": 5,
+                  "column": 1,
+                  "offset": 45
+                },
+                "end": {
+                  "line": 5,
+                  "column": 39,
+                  "offset": 83
+                }
+              },
+              "range": [
+                45,
+                83
+              ]
+            }
+          ],
+          "url": "mailto:someone@example.com",
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 1,
+              "offset": 45
+            },
+            "end": {
+              "line": 5,
+              "column": 39,
+              "offset": 83
+            }
+          },
+          "range": [
+            45,
+            83
+          ]
+        }
+      ],
       "position": {
         "start": {
           "line": 5,
@@ -98,13 +139,98 @@
         },
         "end": {
           "line": 5,
-          "column": 81,
-          "offset": 125
+          "column": 39,
+          "offset": 83
         }
       },
       "range": [
         45,
-        125
+        83
+      ]
+    },
+    {
+      "type": "Paragraph",
+      "children": [
+        {
+          "type": "Link",
+          "children": [
+            {
+              "type": "Text",
+              "value": "[Call me](tel:+1234567890",
+              "position": {
+                "start": {
+                  "line": 7,
+                  "column": 1,
+                  "offset": 85
+                },
+                "end": {
+                  "line": 7,
+                  "column": 27,
+                  "offset": 111
+                }
+              },
+              "range": [
+                85,
+                111
+              ]
+            }
+          ],
+          "url": "tel:+1234567890",
+          "position": {
+            "start": {
+              "line": 7,
+              "column": 1,
+              "offset": 85
+            },
+            "end": {
+              "line": 7,
+              "column": 27,
+              "offset": 111
+            }
+          },
+          "range": [
+            85,
+            111
+          ]
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 7,
+          "column": 1,
+          "offset": 85
+        },
+        "end": {
+          "line": 7,
+          "column": 27,
+          "offset": 111
+        }
+      },
+      "range": [
+        85,
+        111
+      ]
+    },
+    {
+      "type": "Html",
+      "value": "<a href=\"https://telegram.org/\" class=\"text-entity-link\" dir=\"auto\">link html</a>",
+      "tagName": "a",
+      "isVoidElement": false,
+      "position": {
+        "start": {
+          "line": 9,
+          "column": 1,
+          "offset": 113
+        },
+        "end": {
+          "line": 9,
+          "column": 81,
+          "offset": 193
+        }
+      },
+      "range": [
+        113,
+        193
       ]
     },
     {
@@ -115,19 +241,19 @@
           "value": "",
           "position": {
             "start": {
-              "line": 7,
+              "line": 11,
               "column": 3,
-              "offset": 130
+              "offset": 198
             },
             "end": {
-              "line": 9,
+              "line": 13,
               "column": 51,
-              "offset": 187
+              "offset": 255
             }
           },
           "range": [
-            130,
-            187
+            198,
+            255
           ]
         },
         {
@@ -136,38 +262,38 @@
           "url": "https://picsum.photos/id/237/200/300",
           "position": {
             "start": {
-              "line": 7,
+              "line": 11,
               "column": 3,
-              "offset": 130
+              "offset": 198
             },
             "end": {
-              "line": 9,
+              "line": 13,
               "column": 51,
-              "offset": 187
+              "offset": 255
             }
           },
           "range": [
-            130,
-            187
+            198,
+            255
           ]
         }
       ],
       "depth": 1,
       "position": {
         "start": {
-          "line": 7,
+          "line": 11,
           "column": 1,
-          "offset": 128
+          "offset": 196
         },
         "end": {
-          "line": 10,
+          "line": 14,
           "column": 1,
-          "offset": 188
+          "offset": 256
         }
       },
       "range": [
-        128,
-        188
+        196,
+        256
       ]
     },
     {
@@ -177,19 +303,41 @@
       "isVoidElement": true,
       "position": {
         "start": {
-          "line": 11,
+          "line": 15,
           "column": 1,
-          "offset": 189
+          "offset": 257
         },
         "end": {
-          "line": 11,
+          "line": 15,
           "column": 70,
-          "offset": 258
+          "offset": 326
         }
       },
       "range": [
-        189,
-        258
+        257,
+        326
+      ]
+    },
+    {
+      "type": "Html",
+      "value": "<img class=\"custom-emoji emoji emoji-small\" draggable=\"false\" alt=\"😲\" data-document-id=\"00000\" data-unique-id=\"00000\" data-entity-type=\"MessageEntityCustomEmoji\" src=\"http://localhost:1234/blank.00000.png\">",
+      "tagName": "img",
+      "isVoidElement": true,
+      "position": {
+        "start": {
+          "line": 17,
+          "column": 1,
+          "offset": 328
+        },
+        "end": {
+          "line": 17,
+          "column": 208,
+          "offset": 535
+        }
+      },
+      "range": [
+        328,
+        535
       ]
     },
     {
@@ -200,19 +348,19 @@
           "value": "Strike\n\n",
           "position": {
             "start": {
-              "line": 13,
+              "line": 19,
               "column": 3,
-              "offset": 262
+              "offset": 539
             },
             "end": {
-              "line": 15,
+              "line": 21,
               "column": 3,
-              "offset": 272
+              "offset": 549
             }
           },
           "range": [
-            262,
-            272
+            539,
+            549
           ]
         },
         {
@@ -223,56 +371,56 @@
               "value": "strike double tilda",
               "position": {
                 "start": {
-                  "line": 15,
+                  "line": 21,
                   "column": 3,
-                  "offset": 272
+                  "offset": 549
                 },
                 "end": {
-                  "line": 15,
+                  "line": 21,
                   "column": 23,
-                  "offset": 292
+                  "offset": 569
                 }
               },
               "range": [
-                272,
-                292
+                549,
+                569
               ]
             }
           ],
           "position": {
             "start": {
-              "line": 13,
+              "line": 19,
               "column": 3,
-              "offset": 262
+              "offset": 539
             },
             "end": {
-              "line": 15,
+              "line": 21,
               "column": 24,
-              "offset": 293
+              "offset": 570
             }
           },
           "range": [
-            262,
-            293
+            539,
+            570
           ]
         }
       ],
       "depth": 1,
       "position": {
         "start": {
-          "line": 13,
+          "line": 19,
           "column": 1,
-          "offset": 260
+          "offset": 537
         },
         "end": {
-          "line": 16,
+          "line": 22,
           "column": 1,
-          "offset": 294
+          "offset": 571
         }
       },
       "range": [
-        260,
-        294
+        537,
+        571
       ]
     },
     {
@@ -283,19 +431,19 @@
           "value": "~text~\n\n<del>strike html (del)</del>\n\n# Strong (",
           "position": {
             "start": {
-              "line": 17,
+              "line": 23,
               "column": 1,
-              "offset": 295
+              "offset": 572
             },
             "end": {
-              "line": 21,
+              "line": 27,
               "column": 13,
-              "offset": 345
+              "offset": 622
             }
           },
           "range": [
-            295,
-            345
+            572,
+            622
           ]
         },
         {
@@ -306,19 +454,19 @@
               "value": "bold",
               "position": {
                 "start": {
-                  "line": 21,
+                  "line": 27,
                   "column": 13,
-                  "offset": 345
+                  "offset": 622
                 },
                 "end": {
-                  "line": 21,
+                  "line": 27,
                   "column": 18,
-                  "offset": 350
+                  "offset": 627
                 }
               },
               "range": [
-                345,
-                350
+                622,
+                627
               ]
             },
             {
@@ -326,19 +474,19 @@
               "value": ")\n\n",
               "position": {
                 "start": {
-                  "line": 21,
+                  "line": 27,
                   "column": 19,
-                  "offset": 351
+                  "offset": 628
                 },
                 "end": {
-                  "line": 23,
+                  "line": 29,
                   "column": 3,
-                  "offset": 356
+                  "offset": 633
                 }
               },
               "range": [
-                351,
-                356
+                628,
+                633
               ]
             },
             {
@@ -349,55 +497,55 @@
                   "value": "bold double underscore",
                   "position": {
                     "start": {
-                      "line": 23,
+                      "line": 29,
                       "column": 3,
-                      "offset": 356
+                      "offset": 633
                     },
                     "end": {
-                      "line": 23,
+                      "line": 29,
                       "column": 26,
-                      "offset": 379
+                      "offset": 656
                     }
                   },
                   "range": [
-                    356,
-                    379
+                    633,
+                    656
                   ]
                 }
               ],
               "position": {
                 "start": {
-                  "line": 21,
+                  "line": 27,
                   "column": 19,
-                  "offset": 351
+                  "offset": 628
                 },
                 "end": {
-                  "line": 23,
+                  "line": 29,
                   "column": 27,
-                  "offset": 380
+                  "offset": 657
                 }
               },
               "range": [
-                351,
-                380
+                628,
+                657
               ]
             }
           ],
           "position": {
             "start": {
-              "line": 17,
+              "line": 23,
               "column": 1,
-              "offset": 295
+              "offset": 572
             },
             "end": {
-              "line": 24,
+              "line": 30,
               "column": 1,
-              "offset": 381
+              "offset": 658
             }
           },
           "range": [
-            295,
-            381
+            572,
+            658
           ]
         },
         {
@@ -405,19 +553,19 @@
           "value": "<b>bold tag</b>\n\n",
           "position": {
             "start": {
-              "line": 25,
+              "line": 31,
               "column": 1,
-              "offset": 382
+              "offset": 659
             },
             "end": {
-              "line": 27,
+              "line": 33,
               "column": 3,
-              "offset": 401
+              "offset": 678
             }
           },
           "range": [
-            382,
-            401
+            659,
+            678
           ]
         },
         {
@@ -428,55 +576,55 @@
               "value": "bold2 doulbe star",
               "position": {
                 "start": {
-                  "line": 27,
+                  "line": 33,
                   "column": 3,
-                  "offset": 401
+                  "offset": 678
                 },
                 "end": {
-                  "line": 27,
+                  "line": 33,
                   "column": 21,
-                  "offset": 419
+                  "offset": 696
                 }
               },
               "range": [
-                401,
-                419
+                678,
+                696
               ]
             }
           ],
           "position": {
             "start": {
-              "line": 25,
+              "line": 31,
               "column": 1,
-              "offset": 382
+              "offset": 659
             },
             "end": {
-              "line": 27,
+              "line": 33,
               "column": 22,
-              "offset": 420
+              "offset": 697
             }
           },
           "range": [
-            382,
-            420
+            659,
+            697
           ]
         }
       ],
       "position": {
         "start": {
-          "line": 17,
+          "line": 23,
           "column": 1,
-          "offset": 295
+          "offset": 572
         },
         "end": {
-          "line": 27,
+          "line": 33,
           "column": 22,
-          "offset": 420
+          "offset": 697
         }
       },
       "range": [
-        295,
-        420
+        572,
+        697
       ]
     },
     {
@@ -487,19 +635,19 @@
           "value": "Emphasis (",
           "position": {
             "start": {
-              "line": 29,
+              "line": 35,
               "column": 3,
-              "offset": 424
+              "offset": 701
             },
             "end": {
-              "line": 29,
+              "line": 35,
               "column": 15,
-              "offset": 436
+              "offset": 713
             }
           },
           "range": [
-            424,
-            436
+            701,
+            713
           ]
         },
         {
@@ -510,19 +658,19 @@
               "value": "italic",
               "position": {
                 "start": {
-                  "line": 29,
+                  "line": 35,
                   "column": 15,
-                  "offset": 436
+                  "offset": 713
                 },
                 "end": {
-                  "line": 29,
+                  "line": 35,
                   "column": 22,
-                  "offset": 443
+                  "offset": 720
                 }
               },
               "range": [
-                436,
-                443
+                713,
+                720
               ]
             },
             {
@@ -530,19 +678,19 @@
               "value": ")\n\n_italic single underscore_\n\n*italic single star*\n\n<em></em>\n\n# Underline (",
               "position": {
                 "start": {
-                  "line": 29,
+                  "line": 35,
                   "column": 23,
-                  "offset": 444
+                  "offset": 721
                 },
                 "end": {
-                  "line": 37,
+                  "line": 43,
                   "column": 16,
-                  "offset": 523
+                  "offset": 800
                 }
               },
               "range": [
-                444,
-                523
+                721,
+                800
               ]
             },
             {
@@ -553,39 +701,39 @@
                   "value": "strike",
                   "position": {
                     "start": {
-                      "line": 37,
+                      "line": 43,
                       "column": 16,
-                      "offset": 523
+                      "offset": 800
                     },
                     "end": {
-                      "line": 37,
+                      "line": 43,
                       "column": 23,
-                      "offset": 530
+                      "offset": 807
                     }
                   },
                   "range": [
-                    523,
-                    530
+                    800,
+                    807
                   ]
                 },
                 {
                   "type": "Text",
-                  "value": ")\n\n<u>underline html (u)</u>\n\n<span style=\"text-decoration: underline;\">underline html (style)</span>\n\n<ins>underline html (ins)</ins>\n\n# html\n\n<custom>custom html</custom>\n\n<b>\n  <em>\n    <u>\n      <ins>\n        <a href=\"https://telegram.org/\" class=\"text-entity-link\" dir=\"auto\">link html</a>\n        <img src=\"https://picsum.photos/id/237/200/300\" alt=\"image html alt\">\n      </ins>\n    </u>\n  </em>\n</b>\n\n<div>broken html closing tag/div></div>\n\n# Blockquote\n\n> blockquote line 1\ntext line 2\ntext line 3\n\n> blockquote single line\n\n>>> blockquote nested\n\n> blockquote 1\n> blockquote 2\n\n# Text\n\nparagraph\n\nline1\nline2\n\n# Code ",
+                  "value": ")\n\n<u>underline html (u)</u>\n\n<span style=\"text-decoration: underline;\">underline html (style)</span>\n\n<ins>underline html (ins)</ins>\n\n# html\n\n<custom>custom html</custom>\n\n<b>\n  <em>\n    <u>\n      <ins>\n        <a href=\"https://telegram.org/\" class=\"text-entity-link\" dir=\"auto\">link html</a>\n        <img src=\"https://picsum.photos/id/237/200/300\" alt=\"image html alt\">\n      </ins>\n    </u>\n  </em>\n</b>\n\n<div>broken html closing tag/div></div>\n\n<span class=\"spoiler\" data-entity-type=\"MessageEntitySpoiler\">spoiler</span>\n\n# Blockquote\n\n<blockquote class=\"blockquote\" data-entity-type=\"MessageEntityBlockquote\">quote</blockquote>\n\n> blockquote line 1\ntext line 2\ntext line 3\n\n> blockquote single line\n\n>>> blockquote nested\n\n> blockquote 1\n> blockquote 2\n\n# Text\n\nparagraph\n\nline1\nline2\n\n# Code ",
                   "position": {
                     "start": {
-                      "line": 37,
+                      "line": 43,
                       "column": 24,
-                      "offset": 531
+                      "offset": 808
                     },
                     "end": {
-                      "line": 82,
+                      "line": 92,
                       "column": 14,
-                      "offset": 1165
+                      "offset": 1614
                     }
                   },
                   "range": [
-                    531,
-                    1165
+                    808,
+                    1614
                   ]
                 },
                 {
@@ -593,37 +741,37 @@
                   "value": "test",
                   "position": {
                     "start": {
-                      "line": 37,
+                      "line": 43,
                       "column": 24,
-                      "offset": 531
+                      "offset": 808
                     },
                     "end": {
-                      "line": 82,
+                      "line": 92,
                       "column": 14,
-                      "offset": 1165
+                      "offset": 1614
                     }
                   },
                   "range": [
-                    531,
-                    1165
+                    808,
+                    1614
                   ]
                 }
               ],
               "position": {
                 "start": {
-                  "line": 29,
+                  "line": 35,
                   "column": 23,
-                  "offset": 444
+                  "offset": 721
                 },
                 "end": {
-                  "line": 83,
+                  "line": 93,
                   "column": 1,
-                  "offset": 1166
+                  "offset": 1615
                 }
               },
               "range": [
-                444,
-                1166
+                721,
+                1615
               ]
             },
             {
@@ -631,37 +779,37 @@
               "value": "inline code",
               "position": {
                 "start": {
-                  "line": 84,
+                  "line": 94,
                   "column": 1,
-                  "offset": 1167
+                  "offset": 1616
                 },
                 "end": {
-                  "line": 84,
+                  "line": 94,
                   "column": 14,
-                  "offset": 1180
+                  "offset": 1629
                 }
               },
               "range": [
-                1167,
-                1180
+                1616,
+                1629
               ]
             }
           ],
           "position": {
             "start": {
-              "line": 29,
+              "line": 35,
               "column": 3,
-              "offset": 424
+              "offset": 701
             },
             "end": {
-              "line": 85,
+              "line": 95,
               "column": 1,
-              "offset": 1181
+              "offset": 1630
             }
           },
           "range": [
-            424,
-            1181
+            701,
+            1630
           ]
         },
         {
@@ -669,38 +817,38 @@
           "value": "inline code line1\ninline code line2",
           "position": {
             "start": {
-              "line": 86,
+              "line": 96,
               "column": 1,
-              "offset": 1182
+              "offset": 1631
             },
             "end": {
-              "line": 87,
+              "line": 97,
               "column": 19,
-              "offset": 1219
+              "offset": 1668
             }
           },
           "range": [
-            1182,
-            1219
+            1631,
+            1668
           ]
         }
       ],
       "depth": 1,
       "position": {
         "start": {
-          "line": 29,
+          "line": 35,
           "column": 1,
-          "offset": 422
+          "offset": 699
         },
         "end": {
-          "line": 88,
+          "line": 98,
           "column": 1,
-          "offset": 1220
+          "offset": 1669
         }
       },
       "range": [
-        422,
-        1220
+        699,
+        1669
       ]
     },
     {
@@ -711,37 +859,37 @@
           "value": "```inline code```",
           "position": {
             "start": {
-              "line": 89,
+              "line": 99,
               "column": 1,
-              "offset": 1221
+              "offset": 1670
             },
             "end": {
-              "line": 89,
+              "line": 99,
               "column": 18,
-              "offset": 1238
+              "offset": 1687
             }
           },
           "range": [
-            1221,
-            1238
+            1670,
+            1687
           ]
         }
       ],
       "position": {
         "start": {
-          "line": 89,
+          "line": 99,
           "column": 1,
-          "offset": 1221
+          "offset": 1670
         },
         "end": {
-          "line": 89,
+          "line": 99,
           "column": 18,
-          "offset": 1238
+          "offset": 1687
         }
       },
       "range": [
-        1221,
-        1238
+        1670,
+        1687
       ]
     },
     {
@@ -750,19 +898,19 @@
       "lang": null,
       "position": {
         "start": {
-          "line": 91,
+          "line": 101,
           "column": 1,
-          "offset": 1240
+          "offset": 1689
         },
         "end": {
-          "line": 93,
+          "line": 103,
           "column": 4,
-          "offset": 1264
+          "offset": 1713
         }
       },
       "range": [
-        1240,
-        1264
+        1689,
+        1713
       ]
     },
     {
@@ -771,19 +919,19 @@
       "lang": null,
       "position": {
         "start": {
-          "line": 95,
+          "line": 105,
           "column": 1,
-          "offset": 1266
+          "offset": 1715
         },
         "end": {
-          "line": 97,
+          "line": 107,
           "column": 4,
-          "offset": 1289
+          "offset": 1738
         }
       },
       "range": [
-        1266,
-        1289
+        1715,
+        1738
       ]
     },
     {
@@ -792,19 +940,19 @@
       "lang": null,
       "position": {
         "start": {
-          "line": 99,
+          "line": 109,
           "column": 1,
-          "offset": 1291
+          "offset": 1740
         },
         "end": {
-          "line": 101,
+          "line": 111,
           "column": 12,
-          "offset": 1316
+          "offset": 1765
         }
       },
       "range": [
-        1291,
-        1316
+        1740,
+        1765
       ]
     },
     {
@@ -815,37 +963,37 @@
           "value": "`inbalance inline code 1```",
           "position": {
             "start": {
-              "line": 103,
+              "line": 113,
               "column": 1,
-              "offset": 1318
+              "offset": 1767
             },
             "end": {
-              "line": 103,
+              "line": 113,
               "column": 28,
-              "offset": 1345
+              "offset": 1794
             }
           },
           "range": [
-            1318,
-            1345
+            1767,
+            1794
           ]
         }
       ],
       "position": {
         "start": {
-          "line": 103,
+          "line": 113,
           "column": 1,
-          "offset": 1318
+          "offset": 1767
         },
         "end": {
-          "line": 103,
+          "line": 113,
           "column": 28,
-          "offset": 1345
+          "offset": 1794
         }
       },
       "range": [
-        1318,
-        1345
+        1767,
+        1794
       ]
     },
     {
@@ -856,37 +1004,37 @@
           "value": "```inbalance inline code 2`",
           "position": {
             "start": {
-              "line": 105,
+              "line": 115,
               "column": 1,
-              "offset": 1347
+              "offset": 1796
             },
             "end": {
-              "line": 105,
+              "line": 115,
               "column": 28,
-              "offset": 1374
+              "offset": 1823
             }
           },
           "range": [
-            1347,
-            1374
+            1796,
+            1823
           ]
         }
       ],
       "position": {
         "start": {
-          "line": 105,
+          "line": 115,
           "column": 1,
-          "offset": 1347
+          "offset": 1796
         },
         "end": {
-          "line": 105,
+          "line": 115,
           "column": 28,
-          "offset": 1374
+          "offset": 1823
         }
       },
       "range": [
-        1347,
-        1374
+        1796,
+        1823
       ]
     },
     {
@@ -896,19 +1044,19 @@
       "isVoidElement": false,
       "position": {
         "start": {
-          "line": 106,
+          "line": 116,
           "column": 1,
-          "offset": 1375
+          "offset": 1824
         },
         "end": {
-          "line": 112,
+          "line": 122,
           "column": 6,
-          "offset": 1514
+          "offset": 1963
         }
       },
       "range": [
-        1375,
-        1514
+        1824,
+        1963
       ]
     },
     {
@@ -919,19 +1067,19 @@
           "value": "Mixed\n\nLorem Ipsum is simply dummy _text_ of the printing and typesetting industry.\nLorem Ipsum has been the industry's ~",
           "position": {
             "start": {
-              "line": 114,
+              "line": 124,
               "column": 3,
-              "offset": 1519
+              "offset": 1968
             },
             "end": {
-              "line": 117,
+              "line": 127,
               "column": 40,
-              "offset": 1642
+              "offset": 2091
             }
           },
           "range": [
-            1519,
-            1642
+            1968,
+            2091
           ]
         },
         {
@@ -945,19 +1093,19 @@
                   "value": "standard",
                   "position": {
                     "start": {
-                      "line": 117,
+                      "line": 127,
                       "column": 42,
-                      "offset": 1644
+                      "offset": 2093
                     },
                     "end": {
-                      "line": 117,
+                      "line": 127,
                       "column": 51,
-                      "offset": 1653
+                      "offset": 2102
                     }
                   },
                   "range": [
-                    1644,
-                    1653
+                    2093,
+                    2102
                   ]
                 },
                 {
@@ -965,19 +1113,19 @@
                   "value": "",
                   "position": {
                     "start": {
-                      "line": 117,
+                      "line": 127,
                       "column": 54,
-                      "offset": 1656
+                      "offset": 2105
                     },
                     "end": {
-                      "line": 118,
+                      "line": 128,
                       "column": 40,
-                      "offset": 1730
+                      "offset": 2179
                     }
                   },
                   "range": [
-                    1656,
-                    1730
+                    2105,
+                    2179
                   ]
                 },
                 {
@@ -988,38 +1136,38 @@
                       "value": "~ dummy text ever since the 1500s,\nwhen an [unknown](https://example.com/",
                       "position": {
                         "start": {
-                          "line": 117,
+                          "line": 127,
                           "column": 54,
-                          "offset": 1656
+                          "offset": 2105
                         },
                         "end": {
-                          "line": 118,
+                          "line": 128,
                           "column": 40,
-                          "offset": 1730
+                          "offset": 2179
                         }
                       },
                       "range": [
-                        1656,
-                        1730
+                        2105,
+                        2179
                       ]
                     }
                   ],
                   "url": "https://example.com/",
                   "position": {
                     "start": {
-                      "line": 117,
+                      "line": 127,
                       "column": 54,
-                      "offset": 1656
+                      "offset": 2105
                     },
                     "end": {
-                      "line": 118,
+                      "line": 128,
                       "column": 40,
-                      "offset": 1730
+                      "offset": 2179
                     }
                   },
                   "range": [
-                    1656,
-                    1730
+                    2105,
+                    2179
                   ]
                 },
                 {
@@ -1027,19 +1175,19 @@
                   "value": "printer took a galley of ",
                   "position": {
                     "start": {
-                      "line": 118,
+                      "line": 128,
                       "column": 41,
-                      "offset": 1731
+                      "offset": 2180
                     },
                     "end": {
-                      "line": 118,
+                      "line": 128,
                       "column": 72,
-                      "offset": 1762
+                      "offset": 2211
                     }
                   },
                   "range": [
-                    1731,
-                    1762
+                    2180,
+                    2211
                   ]
                 },
                 {
@@ -1047,19 +1195,19 @@
                   "value": "type",
                   "position": {
                     "start": {
-                      "line": 118,
+                      "line": 128,
                       "column": 41,
-                      "offset": 1731
+                      "offset": 2180
                     },
                     "end": {
-                      "line": 118,
+                      "line": 128,
                       "column": 72,
-                      "offset": 1762
+                      "offset": 2211
                     }
                   },
                   "range": [
-                    1731,
-                    1762
+                    2180,
+                    2211
                   ]
                 },
                 {
@@ -1067,19 +1215,19 @@
                   "value": "and scrambled it to make a type specimen book\n\n# Broken HTML\n\ntextwithstar*\n\n*starwithtext\n\n",
                   "position": {
                     "start": {
-                      "line": 118,
+                      "line": 128,
                       "column": 73,
-                      "offset": 1763
+                      "offset": 2212
                     },
                     "end": {
-                      "line": 126,
+                      "line": 136,
                       "column": 3,
-                      "offset": 1857
+                      "offset": 2306
                     }
                   },
                   "range": [
-                    1763,
-                    1857
+                    2212,
+                    2306
                   ]
                 },
                 {
@@ -1090,55 +1238,55 @@
                       "value": "textstaritalic*\n\n*staritalictext",
                       "position": {
                         "start": {
-                          "line": 126,
+                          "line": 136,
                           "column": 3,
-                          "offset": 1857
+                          "offset": 2306
                         },
                         "end": {
-                          "line": 128,
+                          "line": 138,
                           "column": 17,
-                          "offset": 1890
+                          "offset": 2339
                         }
                       },
                       "range": [
-                        1857,
-                        1890
+                        2306,
+                        2339
                       ]
                     }
                   ],
                   "position": {
                     "start": {
-                      "line": 118,
+                      "line": 128,
                       "column": 73,
-                      "offset": 1763
+                      "offset": 2212
                     },
                     "end": {
-                      "line": 128,
+                      "line": 138,
                       "column": 18,
-                      "offset": 1891
+                      "offset": 2340
                     }
                   },
                   "range": [
-                    1763,
-                    1891
+                    2212,
+                    2340
                   ]
                 }
               ],
               "position": {
                 "start": {
-                  "line": 117,
+                  "line": 127,
                   "column": 40,
-                  "offset": 1642
+                  "offset": 2091
                 },
                 "end": {
-                  "line": 129,
+                  "line": 139,
                   "column": 1,
-                  "offset": 1892
+                  "offset": 2341
                 }
               },
               "range": [
-                1642,
-                1892
+                2091,
+                2341
               ]
             },
             {
@@ -1149,55 +1297,55 @@
                   "value": "textunderscoreitalic_\n\n_underscoreitalictext",
                   "position": {
                     "start": {
-                      "line": 130,
+                      "line": 140,
                       "column": 3,
-                      "offset": 1895
+                      "offset": 2344
                     },
                     "end": {
-                      "line": 132,
+                      "line": 142,
                       "column": 23,
-                      "offset": 1940
+                      "offset": 2389
                     }
                   },
                   "range": [
-                    1895,
-                    1940
+                    2344,
+                    2389
                   ]
                 }
               ],
               "position": {
                 "start": {
-                  "line": 130,
+                  "line": 140,
                   "column": 1,
-                  "offset": 1893
+                  "offset": 2342
                 },
                 "end": {
-                  "line": 132,
+                  "line": 142,
                   "column": 24,
-                  "offset": 1941
+                  "offset": 2390
                 }
               },
               "range": [
-                1893,
-                1941
+                2342,
+                2390
               ]
             }
           ],
           "position": {
             "start": {
-              "line": 114,
+              "line": 124,
               "column": 3,
-              "offset": 1519
+              "offset": 1968
             },
             "end": {
-              "line": 133,
+              "line": 143,
               "column": 1,
-              "offset": 1942
+              "offset": 2391
             }
           },
           "range": [
-            1519,
-            1942
+            1968,
+            2391
           ]
         },
         {
@@ -1205,38 +1353,38 @@
           "value": "_text\n\ntext_\n\n<div broken open html tag<div>\n",
           "position": {
             "start": {
-              "line": 134,
+              "line": 144,
               "column": 1,
-              "offset": 1943
+              "offset": 2392
             },
             "end": {
-              "line": 138,
+              "line": 148,
               "column": 32,
-              "offset": 1988
+              "offset": 2437
             }
           },
           "range": [
-            1943,
-            1988
+            2392,
+            2437
           ]
         }
       ],
       "depth": 1,
       "position": {
         "start": {
-          "line": 114,
+          "line": 124,
           "column": 1,
-          "offset": 1517
+          "offset": 1966
         },
         "end": {
-          "line": 138,
+          "line": 148,
           "column": 32,
-          "offset": 1988
+          "offset": 2437
         }
       },
       "range": [
-        1517,
-        1988
+        1966,
+        2437
       ]
     }
   ],
@@ -1247,13 +1395,13 @@
       "offset": 0
     },
     "end": {
-      "line": 138,
+      "line": 148,
       "column": 32,
-      "offset": 1988
+      "offset": 2437
     }
   },
   "range": [
     0,
-    1988
+    2437
   ]
 }

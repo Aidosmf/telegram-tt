@@ -63,7 +63,10 @@ export default function parseHtmlAsFormattedText(
   });
 
 
+  console.log("MF", "TEXT", text);
+  console.log("MF", "ENTITIES", entities);
 
+  // return clean Text without any styles
   return {
     text,
     entities: entities.length ? entities : undefined,
@@ -138,7 +141,6 @@ function parseMarkdown(html: string) {
 
   console.log("MF", "Parsed Before", html);
   console.log("MF", "Parsed After", parsedHtml);
-  console.log("MF", myParseMarkdown(html));
 
   return parsedHtml;
 }

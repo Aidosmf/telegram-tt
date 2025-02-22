@@ -20,6 +20,10 @@ const input = `# Link
 
 [link - text](https://example.com/)
 
+[Email me](mailto:someone@example.com)
+
+[Call me](tel:+1234567890)
+
 <a href="https://telegram.org/" class="text-entity-link" dir="auto">link html</a>
 
 # Image
@@ -27,6 +31,8 @@ const input = `# Link
 ![image-alt](https://picsum.photos/id/237/200/300)
 
 <img src="https://picsum.photos/id/237/200/300" alt="image html alt">
+
+<img class="custom-emoji emoji emoji-small" draggable="false" alt="😲" data-document-id="00000" data-unique-id="00000" data-entity-type="MessageEntityCustomEmoji" src="http://localhost:1234/blank.00000.png">
 
 # Strike
 
@@ -77,7 +83,11 @@ _italic single underscore_
 
 <div>broken html closing tag/div></div>
 
+<span class="spoiler" data-entity-type="MessageEntitySpoiler">spoiler</span>
+
 # Blockquote
+
+<blockquote class="blockquote" data-entity-type="MessageEntityBlockquote">quote</blockquote>
 
 > blockquote line 1
 text line 2
