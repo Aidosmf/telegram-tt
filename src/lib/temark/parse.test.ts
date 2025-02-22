@@ -5,7 +5,7 @@
 /* eslint-disable max-len */
 
 /**
- * For running tests: "npx tsx src/lib/temark/parse.test.tsx"
+ * For running tests: "npx tsx src/lib/temark/parse.test.ts"
  * The output will be written to the file src/lib/temark/ast-test-result-file.json
  *
  * TODO: config JEST with a snapshot test or unit tests
