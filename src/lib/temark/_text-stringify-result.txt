@@ -1,30 +1,44 @@
-# Link[link - text](https://example.com/)
+# Link
+
+[link - text](https://example.com/)
 
 <a href="https://telegram.org/" class="text-entity-link" dir="auto">link html</a>
 
-# Image![image-alt](https://picsum.photos/id/237/200/300)
+# Image
+
+![image-alt](https://picsum.photos/id/237/200/300)
 
 <img src="https://picsum.photos/id/237/200/300" alt="image html alt">
 
-# Strike~~strike double tilda~~
+# Strike
+
+~~strike double tilda~~
 
 ~text~
 
 <del>strike html (del)</del>
 
-# Strong (**bold)**_bold double underscore_<b>bold tag</b>
+# Strong (**bold)**_bold double underscore_
+
+<b>bold tag</b>
 
 **bold2 doulbe star**
 
-# Emphasis (_italic)__italic single underscore_*italic single star*
+# Emphasis (_italic)__italic single underscore_
+
+*italic single star*
 
 <em></em>
 
-# Underline (~~strike)~~<u>underline html (u)</u><span style="text-decoration: underline;">underline html (style)</span>
+# Underline (~~strike)~~<u>underline html (u)</u>
+
+<span style="text-decoration: underline;">underline html (style)</span>
 
 <ins>underline html (ins)</ins>
 
-# html<custom>custom html</custom>
+# html
+
+<custom>custom html</custom>
 
 <b>
   <em>
@@ -39,21 +53,18 @@
 
 <div>broken html closing tag/div></div>
 
-# Blockquote>
+# Blockquote
 
-> blockquote line 1text line 2text line 3
+>> blockquote line 1text line 2text line 3
 
->
-
-> blockquote single line
+>> blockquote single line
 
 >>>>> blockquote nested
+>> blockquote 1> blockquote 2
 
->
+# Text
 
-> blockquote 1> blockquote 2
-
-# Textparagraph
+paragraph
 
 line1line2
 
@@ -61,15 +72,26 @@ line1line2
 
 `inline code`
 
-``````
+```
+inline code line1
+inline code line2```
 
 ```inline code```
 
-``````
+```
+js
+console.log();
+```
 
-``````
+```
+python
+  print()
+```
 
-``````
+```
+inline code
+
+with space```
 
 `inbalance inline code 1```
 
@@ -83,9 +105,9 @@ line1line2
                  ||     ||
 </pre>
 
-# MixedLorem Ipsum is simply dummy _text_ of the printing and typesetting industry.Lorem Ipsum has been the industry's ~**_standard~ dummy text ever since the 1500s,[when an unknown](https://example.com/)printer took a galley of ``
+# Mixed
 
-and scrambled it to make a type specimen book_# Broken HTML**textwithstar*
+Lorem Ipsum is simply dummy _text_ of the printing and typesetting industry.Lorem Ipsum has been the industry's ~**_standard~ dummy text ever since the 1500s,[when an unknown](https://example.com/)printer took a galley of ``and scrambled it to make a type specimen book_# Broken HTML**textwithstar*
 
 *starwithtext
 

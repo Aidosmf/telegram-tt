@@ -6,7 +6,7 @@ export const stringify = (root: AnyNode): string => {
   const text: string[] = [];
 
   visit(root, {
-    enter(node) {
+    enter(node, parent) {
       switch (node.type) {
         case 'Image':
           text.push('![', node.alt, '](', node.url || '', ')');
@@ -17,12 +17,23 @@ export const stringify = (root: AnyNode): string => {
           return;
         } case 'Code':
           text.push(`\`\`\`${node.lang || ''}`);
+          text.push('\n');
+          text.push(node.value);
           return;
         case 'Link':
           text.push('[');
           return;
         case 'Text':
           text.push(node.value);
+
+          switch (parent?.type) {
+            case 'Blockquote':
+              text.push('\n');
+              break;
+            default:
+              break;
+          }
+
           return;
         case 'InlineCode':
           text.push('`');
@@ -50,7 +61,7 @@ export const stringify = (root: AnyNode): string => {
       switch (node.type) {
         case 'Paragraph':
         case 'Html':
-        case 'Blockquote':
+        case 'Heading':
           text.push('\n\n');
           return;
         case 'Code':
@@ -59,7 +70,6 @@ export const stringify = (root: AnyNode): string => {
           return;
         case 'InlineCode':
           text.push('`');
-          text.push('\n\n');
           break;
         case 'Link':
           text.push(']');

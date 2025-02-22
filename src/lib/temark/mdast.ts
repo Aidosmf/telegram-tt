@@ -26,6 +26,7 @@ export interface Blockquote extends Parent {
 export interface Code extends Literal {
   type: 'Code';
   lang: string | null;
+  value: string;
 }
 
 /**
