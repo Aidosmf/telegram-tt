@@ -1,12 +1,10 @@
-# Link
+# [Link
 
-[link - text](https://example.com/)
+link - text](https://example.com/)
 
 <a href="https://telegram.org/" class="text-entity-link" dir="auto">link html</a>
 
-# Image
-
-![image-alt](https://picsum.photos/id/237/200/300)
+# ![image-alt](https://picsum.photos/id/237/200/300)
 
 <img src="https://picsum.photos/id/237/200/300" alt="image html alt">
 
@@ -18,19 +16,23 @@
 
 <del>strike html (del)</del>
 
-# Strong (**bold)**_bold double underscore_
+# Strong (**bold)
 
-<b>bold tag</b>
+_bold double underscore_**<b>bold tag</b>
 
 **bold2 doulbe star**
 
-# Emphasis (_italic)__italic single underscore_
+# Emphasis (_italic)
+
+_italic single underscore_
 
 *italic single star*
 
 <em></em>
 
-# Underline (~~strike)~~<u>underline html (u)</u>
+# Underline (~~strike)
+
+<u>underline html (u)</u>
 
 <span style="text-decoration: underline;">underline html (style)</span>
 
@@ -55,26 +57,25 @@
 
 # Blockquote
 
->> blockquote line 1text line 2text line 3
+> blockquote line 1
+text line 2
+text line 3
 
->> blockquote single line
+> blockquote single line
 
->>>>> blockquote nested
->> blockquote 1> blockquote 2
+>>> blockquote nested
+
+> blockquote 1
+> blockquote 2
 
 # Text
 
 paragraph
 
-line1line2
+line1
+line2
 
-# Code ``
-
-`inline code`
-
-```
-inline code line1
-inline code line2```
+# Code ``~~``_``
 
 ```inline code```
 
@@ -107,15 +108,21 @@ with space```
 
 # Mixed
 
-Lorem Ipsum is simply dummy _text_ of the printing and typesetting industry.Lorem Ipsum has been the industry's ~**_standard~ dummy text ever since the 1500s,[when an unknown](https://example.com/)printer took a galley of ``and scrambled it to make a type specimen book_# Broken HTML**textwithstar*
+Lorem Ipsum is simply dummy _text_ of the printing and typesetting industry.
+Lorem Ipsum has been the industry's ~**_standard[~ dummy text ever since the 1500s,
+when an unknown](https://example.com/)printer took a galley of ``and scrambled it to make a type specimen book
+
+# Broken HTML
+
+textwithstar*
 
 *starwithtext
 
-**textstaritalic**staritalictext**
+**textstaritalic*
 
-__textunderscoreitalic__underscoreitalictext__
+*staritalictext**__textunderscoreitalic_
 
-_text
+_underscoreitalictext_**_text
 
 text_
 

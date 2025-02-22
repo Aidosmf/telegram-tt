@@ -577,7 +577,7 @@ export class Parser {
   }
 
   private parseText(c: number, start: Point): ParseRichTextResult {
-    while (c !== -1 && !this.r.isEnded && !this.r.isNewLine) {
+    while (c !== -1) {
       if (RICH_TEXT_DELIMETERS.has(c)) {
         const result = this.parseRichText(c, start);
 
