@@ -1,8 +1,9 @@
-import type { ApiFormattedText, ApiMessageEntity } from '../api/types';
+import type { ApiFormattedText, ApiMessageEntity, ApiMessageEntityTextUrl } from '../api/types';
 import { ApiMessageEntityTypes } from '../api/types';
-import { parse as myParseMarkdown } from '../lib/temark';
+
 import { RE_LINK_TEMPLATE } from '../config';
-import { IS_EMOJI_SUPPORTED } from './windowEnvironment';
+import { parse as parseMarkdown, type Root, stringify, visit as traverseAst } from '../lib/temark';
+import { AnyNode, Html as HtmlNode, Link as LinkNode } from '../lib/temark/mdast';
 
 export const ENTITY_CLASS_BY_NODE_NAME: Record<string, ApiMessageEntityTypes> = {
   B: ApiMessageEntityTypes.Bold,
@@ -19,56 +20,40 @@ export const ENTITY_CLASS_BY_NODE_NAME: Record<string, ApiMessageEntityTypes> = 
   BLOCKQUOTE: ApiMessageEntityTypes.Blockquote,
 };
 
-const MAX_TAG_DEEPNESS = 3;
-
+/**
+ * TODO: handle IS_EMOJI_SUPPORTED, withMarkdownLinks, skipMarkdown, MAX_TAG_DEEPNESS
+ */
 export default function parseHtmlAsFormattedText(
   html: string, withMarkdownLinks = false, skipMarkdown = false,
 ): ApiFormattedText {
+  const ast = parseMarkdown(html);
 
-  const fragment = document.createElement('div');
-  fragment.innerHTML = skipMarkdown ? html
-    : withMarkdownLinks ? parseMarkdown(parseMarkdownLinks(html)) : parseMarkdown(html);
-  fixImageContent(fragment);
-  const text = fragment.innerText.trim().replace(/\u200b+/g, '');
-  const trimShift = fragment.innerText.indexOf(text[0]);
-  let textIndex = -trimShift;
-  let recursionDeepness = 0;
+  // const text = stringify(ast); // if there would be a Markdown API
+  return getFormattedText(ast);
+}
+
+function getFormattedText(astRoot: Root): {
+  text: string;
+  entities: ApiMessageEntity[] | undefined;
+} {
+  const text: string[] = [];
   const entities: ApiMessageEntity[] = [];
 
+  // const { index, entity } = getEntityDataFromNode(node, text, textIndex);
 
-  function addEntity(node: ChildNode) {
-    if (node.nodeType === Node.COMMENT_NODE) return;
-    const { index, entity } = getEntityDataFromNode(node, text, textIndex);
-
-    if (entity) {
-      textIndex = index;
-      entities.push(entity);
-    } else if (node.textContent) {
-      // Skip newlines on the beginning
-      if (index === 0 && node.textContent.trim() === '') {
-        return;
-      }
-      textIndex += node.textContent.length;
-    }
-
-    if (node.hasChildNodes() && recursionDeepness <= MAX_TAG_DEEPNESS) {
-      recursionDeepness += 1;
-      Array.from(node.childNodes).forEach(addEntity);
-    }
-  }
-
-  Array.from(fragment.childNodes).forEach((node) => {
-    recursionDeepness = 1;
-    addEntity(node);
+  traverseAst(astRoot, {
+    enter(node, parent) {
+      const { value, entity } = getEntityDataFromNode(node);
+      if (entity) entities.push(entity);
+      if (value.length > 0) text.push(value);
+    },
+    exit() {
+      // do nothing for now
+    },
   });
 
-
-  console.log("MF", "TEXT", text);
-  console.log("MF", "ENTITIES", entities);
-
-  // return clean Text without any styles
   return {
-    text,
+    text: text.join(''),
     entities: entities.length ? entities : undefined,
   };
 }
@@ -83,69 +68,7 @@ export function fixImageContent(fragment: HTMLDivElement) {
   });
 }
 
-function parseMarkdown(html: string) {
-  let parsedHtml = html.slice(0);
-
-
-  // Strip redundant nbsp's
-  parsedHtml = parsedHtml.replace(/&nbsp;/g, ' ');
-
-  // Replace <div><br></div> with newline (new line in Safari)
-  parsedHtml = parsedHtml.replace(/<div><br([^>]*)?><\/div>/g, '\n');
-  // Replace <br> with newline
-  parsedHtml = parsedHtml.replace(/<br([^>]*)?>/g, '\n');
-
-  // Strip redundant <div> tags
-  parsedHtml = parsedHtml.replace(/<\/div>(\s*)<div>/g, '\n');
-  parsedHtml = parsedHtml.replace(/<div>/g, '\n');
-  parsedHtml = parsedHtml.replace(/<\/div>/g, '');
-
-  // Pre
-  parsedHtml = parsedHtml.replace(/^`{3}(.*?)[\n\r](.*?[\n\r]?)`{3}/gms, '<pre data-language="$1">$2</pre>');
-  parsedHtml = parsedHtml.replace(/^`{3}[\n\r]?(.*?)[\n\r]?`{3}/gms, '<pre>$1</pre>');
-  parsedHtml = parsedHtml.replace(/[`]{3}([^`]+)[`]{3}/g, '<pre>$1</pre>');
-
-  // Code
-  parsedHtml = parsedHtml.replace(
-    /(?!<(code|pre)[^<]*|<\/)[`]{1}([^`\n]+)[`]{1}(?![^<]*<\/(code|pre)>)/g,
-    '<code>$2</code>',
-  );
-
-  // Custom Emoji markdown tag
-  if (!IS_EMOJI_SUPPORTED) {
-    // Prepare alt text for custom emoji
-    parsedHtml = parsedHtml.replace(/\[<img[^>]+alt="([^"]+)"[^>]*>]/gm, '[$1]');
-  }
-  parsedHtml = parsedHtml.replace(
-    /(?!<(?:code|pre)[^<]*|<\/)\[([^\]\n]+)\]\(customEmoji:(\d+)\)(?![^<]*<\/(?:code|pre)>)/g,
-    '<img alt="$1" data-document-id="$2">',
-  );
-
-  // Other simple markdown
-  parsedHtml = parsedHtml.replace(
-    /(?!<(code|pre)[^<]*|<\/)[*]{2}([^*\n]+)[*]{2}(?![^<]*<\/(code|pre)>)/g,
-    '<b>$2</b>',
-  );
-  parsedHtml = parsedHtml.replace(
-    /(?!<(code|pre)[^<]*|<\/)[_]{2}([^_\n]+)[_]{2}(?![^<]*<\/(code|pre)>)/g,
-    '<i>$2</i>',
-  );
-  parsedHtml = parsedHtml.replace(
-    /(?!<(code|pre)[^<]*|<\/)[~]{2}([^~\n]+)[~]{2}(?![^<]*<\/(code|pre)>)/g,
-    '<s>$2</s>',
-  );
-  parsedHtml = parsedHtml.replace(
-    /(?!<(code|pre)[^<]*|<\/)[|]{2}([^|\n]+)[|]{2}(?![^<]*<\/(code|pre)>)/g,
-    `<span data-entity-type="${ApiMessageEntityTypes.Spoiler}">$2</span>`,
-  );
-
-  console.log("MF", "Parsed Before", html);
-  console.log("MF", "Parsed After", parsedHtml);
-
-  return parsedHtml;
-}
-
-function parseMarkdownLinks(html: string) {
+export function parseMarkdownLinks(html: string) {
   return html.replace(new RegExp(`\\[([^\\]]+?)]\\((${RE_LINK_TEMPLATE}+?)\\)`, 'g'), (_, text, link) => {
     const url = link.includes('://') ? link : link.includes('@') ? `mailto:${link}` : `https://${link}`;
     return `<a href="${url}">${text}</a>`;
@@ -153,122 +76,67 @@ function parseMarkdownLinks(html: string) {
 }
 
 function getEntityDataFromNode(
-  node: ChildNode,
-  rawText: string,
-  textIndex: number,
-): { index: number; entity?: ApiMessageEntity } {
-  const type = getEntityTypeFromNode(node);
-
-  if (!type || !node.textContent) {
-    return {
-      index: textIndex,
-      entity: undefined,
-    };
+  node: AnyNode,
+): { value: string; entity: ApiMessageEntity | undefined } {
+  switch (node.type) {
+    case 'Text': return { value: node.value, entity: undefined };
+    case 'Link': return getEntityFromLinkNode(node);
+    case 'Html': return getEntityFromHtmlNode(node);
+    case 'Code': {
+      return {
+        value: node.value,
+        entity: {
+          type: ApiMessageEntityTypes.Code,
+          offset: node.position.start.offset,
+          length: node.position.end.offset - node.position.start.offset,
+        },
+      }
+    }
+    default: {
+      return {
+        value: '', entity: undefined,
+      };
+    }
   }
+}
 
-  const rawIndex = rawText.indexOf(node.textContent, textIndex);
-  // In some cases, last text entity ends with a newline (which gets trimmed from `rawText`).
-  // In this case, `rawIndex` would return `-1`, so we use `textIndex` instead.
-  const index = rawIndex >= 0 ? rawIndex : textIndex;
-  const offset = rawText.substring(0, index).length;
-  const { length } = rawText.substring(index, index + node.textContent.length);
-
-  if (type === ApiMessageEntityTypes.TextUrl) {
-    return {
-      index,
-      entity: {
-        type,
-        offset,
-        length,
-        url: (node as HTMLAnchorElement).href,
-      },
-    };
-  }
-  if (type === ApiMessageEntityTypes.MentionName) {
-    return {
-      index,
-      entity: {
-        type,
-        offset,
-        length,
-        userId: (node as HTMLAnchorElement).dataset.userId!,
-      },
-    };
-  }
-
-  if (type === ApiMessageEntityTypes.Pre) {
-    return {
-      index,
-      entity: {
-        type,
-        offset,
-        length,
-        language: (node as HTMLPreElement).dataset.language,
-      },
-    };
-  }
-
-  if (type === ApiMessageEntityTypes.CustomEmoji) {
-    return {
-      index,
-      entity: {
-        type,
-        offset,
-        length,
-        documentId: (node as HTMLImageElement).dataset.documentId!,
-      },
-    };
-  }
+function getEntityFromLinkNode(node: LinkNode): { value: string; entity: ApiMessageEntityTextUrl } {
+  const link = node.url;
+  const textNode = node.children.find((child) => child.type === 'Text');
+  const value = textNode ? textNode.value : '';
+  const offset = node.position.start.offset;
+  const length = node.position.end.offset - offset;
 
   return {
-    index,
+    value,
     entity: {
-      type,
+      type: ApiMessageEntityTypes.TextUrl,
       offset,
       length,
+      url: link || '',
     },
   };
 }
 
-function getEntityTypeFromNode(node: ChildNode): ApiMessageEntityTypes | undefined {
-  if (node instanceof HTMLElement && node.dataset.entityType) {
-    return node.dataset.entityType as ApiMessageEntityTypes;
+// TODO: parse html and return entity
+function getEntityFromHtmlNode(node: HtmlNode): { value: string; entity: undefined } {
+  const entityClass = ENTITY_CLASS_BY_NODE_NAME[node.tagName];
+  if (!entityClass) return { value: '', entity: undefined };
+
+  switch (node.tagName) {
+    case 'pre':
+    case 'code':
+    case 'blockquote':
+    case 'span':
+    case 'img':
+      return {
+        value: '',
+        entity: undefined,
+      };
   }
 
-  if (ENTITY_CLASS_BY_NODE_NAME[node.nodeName]) {
-    return ENTITY_CLASS_BY_NODE_NAME[node.nodeName];
-  }
-
-  if (node.nodeName === 'A') {
-    const anchor = node as HTMLAnchorElement;
-    if (anchor.dataset.entityType === ApiMessageEntityTypes.MentionName) {
-      return ApiMessageEntityTypes.MentionName;
-    }
-    if (anchor.dataset.entityType === ApiMessageEntityTypes.Url) {
-      return ApiMessageEntityTypes.Url;
-    }
-    if (anchor.href.startsWith('mailto:')) {
-      return ApiMessageEntityTypes.Email;
-    }
-    if (anchor.href.startsWith('tel:')) {
-      return ApiMessageEntityTypes.Phone;
-    }
-    if (anchor.href !== anchor.textContent) {
-      return ApiMessageEntityTypes.TextUrl;
-    }
-
-    return ApiMessageEntityTypes.Url;
-  }
-
-  if (node.nodeName === 'SPAN') {
-    return (node as HTMLElement).dataset.entityType as any;
-  }
-
-  if (node.nodeName === 'IMG') {
-    if ((node as HTMLImageElement).dataset.documentId) {
-      return ApiMessageEntityTypes.CustomEmoji;
-    }
-  }
-
-  return undefined;
+  return {
+    value: '',
+    entity: undefined,
+  };
 }
