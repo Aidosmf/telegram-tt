@@ -158,7 +158,8 @@ text_
 <div broken open html tag<div>
 `;
 
-const rootNode = parse(input);
+const input2 = `<img src="https://picsum.photos/id/237/200/300" alt="image html alt">`
+const rootNode = parse(input2);
 
 const filePath = './src/lib/temark/ast-test-result-file.json';
 writeFileSync(filePath, JSON.stringify(rootNode, undefined, 2));

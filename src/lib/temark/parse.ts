@@ -396,7 +396,7 @@ export class Parser {
     this.stack.push(doubledDelimeter);
     c = this.r.next(); // skip opening delimeter
 
-    const children = this.getRichTextChildren(c, start);
+    const children = this.getRichTextChildren(c, this.r.getPoint());
 
     if (children.length === 0) {
       this.value.push(...textBackup);
@@ -472,16 +472,18 @@ export class Parser {
     }
 
     c = this.r.next(); // skip opening square bracket
+    const textStart = this.r.getPoint();
 
     while (c !== -1 && c !== CC.CHAR_SQUARE_BRACKET_CLOSE) {
       this.value.push(String.fromCharCode(c));
       c = this.r.next();
     }
+    const textEnd = this.r.getPoint();
 
-    if (c === -1) return this.createTextNode(start, this.r.getPoint());
+    if (c === -1) return this.createTextNode(textStart, textEnd);
     c = this.r.next(); // skip closing square bracket
 
-    if (c !== CC.CHAR_PARENTHESIS_OPEN) return this.createTextNode(start, this.r.getPoint());
+    if (c !== CC.CHAR_PARENTHESIS_OPEN) return this.createTextNode(textStart, this.r.getPoint());
     c = this.r.next(); // skip opening parenthesis
 
     let url = '';
@@ -493,7 +495,7 @@ export class Parser {
     c = this.r.next(); // skip closing parenthesis
 
     // TODO: const chilren = this.parseRichText(c, start);
-    const chilren = [this.createTextNode(start, this.r.getPoint())];
+    const chilren = [this.createTextNode(textStart, textEnd)];
     return Parser.createLinkNode(start, this.r.getPoint(), chilren, url);
   }
 
@@ -613,7 +615,7 @@ export class Parser {
     const children: PhrasingContent[] = [];
 
     while (c !== -1 && c !== CC.CHAR_NEWLINE) {
-      const richText = this.parseRichText(c, start);
+      const richText = this.parseRichText(c, this.r.getPoint());
       if (richText) children.push(richText);
 
       if (this.parseRichTextBuffer.length > 0) {
@@ -647,8 +649,7 @@ export class Parser {
       return this.readParagraph(c, start);
     }
 
-    const children = this.getRichTextChildren(c, start);
-    // const children = [this.createTextNode(start, this.r.getPoint())];
+    const children = this.getRichTextChildren(c, this.r.getPoint());
     return Parser.createHeadingNode(start, this.r.getPoint(), depth.length as Heading['depth'], children);
   }
 
@@ -683,6 +684,7 @@ export class Parser {
 
     if (htmlBlock.endsWith('/>') || isVoidElement) {
       this.value.push(htmlBlock);
+      c = this.r.next();
       const end = this.r.getPoint();
       return this.createHtmlNode(start, end, tagName, true);
     }
@@ -752,12 +754,12 @@ export class Parser {
       this.value.push(String.fromCharCode(c));
     }
 
-    const children = this.getRichTextChildren(c, start);
+    const children = this.getRichTextChildren(c, this.r.getPoint());
     return Parser.createBlockquoteNode(start, this.r.getPoint(), children);
   }
 
   private readParagraph(c: number, start: Point): AnyNode {
-    const children = this.getRichTextChildren(c, start);
+    const children = this.getRichTextChildren(c, this.r.getPoint());
     const end = children.length > 0 ? children[children.length - 1].position.end : this.r.getPoint();
     return Parser.createParagraphNode(start, end, children);
   }
