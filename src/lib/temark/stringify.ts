@@ -21,7 +21,6 @@ export const stringify = (root: AnyNode): string => {
           text.push(node.value);
           return;
         case 'Link':
-          text.push('[');
           return;
         case 'Text':
           text.push(node.value);
@@ -72,14 +71,7 @@ export const stringify = (root: AnyNode): string => {
           text.push('`');
           break;
         case 'Link':
-          text.push(']');
-
-          if (node.children.length) {
-            text.push('(');
-            text.push(node.url || '');
-            text.push(')');
-          }
-
+          text.push(')');
           break;
         case 'Strike':
           text.push('~~');

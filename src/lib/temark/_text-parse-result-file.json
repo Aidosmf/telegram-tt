@@ -29,22 +29,22 @@
           "children": [
             {
               "type": "Text",
-              "value": "Link\n\nlink - text",
+              "value": "Link\n\n[link - text](https://example.com/",
               "position": {
                 "start": {
-                  "line": 3,
-                  "column": 2,
-                  "offset": 9
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
                 },
                 "end": {
                   "line": 3,
-                  "column": 13,
-                  "offset": 20
+                  "column": 36,
+                  "offset": 43
                 }
               },
               "range": [
-                9,
-                20
+                2,
+                43
               ]
             }
           ],
@@ -985,22 +985,22 @@
                   "children": [
                     {
                       "type": "Text",
-                      "value": "~ dummy text ever since the 1500s,\nwhen an unknown",
+                      "value": "~ dummy text ever since the 1500s,\nwhen an [unknown](https://example.com/",
                       "position": {
                         "start": {
-                          "line": 118,
-                          "column": 10,
-                          "offset": 1700
+                          "line": 117,
+                          "column": 54,
+                          "offset": 1656
                         },
                         "end": {
                           "line": 118,
-                          "column": 17,
-                          "offset": 1707
+                          "column": 40,
+                          "offset": 1730
                         }
                       },
                       "range": [
-                        1700,
-                        1707
+                        1656,
+                        1730
                       ]
                     }
                   ],

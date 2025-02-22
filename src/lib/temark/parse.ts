@@ -481,22 +481,32 @@ export class Parser {
 
   private parseLink(c: number, start: Point): ParseRichTextResult {
     if (c !== CC.CHAR_SQUARE_BRACKET_OPEN) {
-      throw new Error('Invalid c for parseLink');
+      return this.createTextNode(start, this.r.getPoint());
     }
 
+    this.value.push(String.fromCharCode(c)); // push opening square bracket
     c = this.r.next(); // skip opening square bracket
-    const textStart = this.r.getPoint();
 
+    let text = '';
     while (c !== -1 && c !== CC.CHAR_SQUARE_BRACKET_CLOSE) {
-      this.value.push(String.fromCharCode(c));
+      text += String.fromCharCode(c);
       c = this.r.next();
     }
-    const textEnd = this.r.getPoint();
 
-    if (c === -1) return this.createTextNode(textStart, textEnd);
+    this.value.push(text); // push text
+
+    if (c === -1) {
+      return this.createTextNode(start, this.r.getPoint());
+    }
+
+    this.value.push(String.fromCharCode(c)); // push closing square bracket
     c = this.r.next(); // skip closing square bracket
 
-    if (c !== CC.CHAR_PARENTHESIS_OPEN) return this.createTextNode(textStart, this.r.getPoint());
+    if (c !== CC.CHAR_PARENTHESIS_OPEN) {
+      return this.createTextNode(start, this.r.getPoint());
+    }
+
+    this.value.push(String.fromCharCode(c)); // push opening parenthesis
     c = this.r.next(); // skip opening parenthesis
 
     let url = '';
@@ -505,11 +515,14 @@ export class Parser {
       c = this.r.next();
     }
 
+    this.value.push(url); // push url
+    if (c === -1) return this.createTextNode(start, this.r.getPoint());
+
     c = this.r.next(); // skip closing parenthesis
 
-    // TODO: const chilren = this.parseRichText(c, start);
-    const chilren = [this.createTextNode(textStart, textEnd)];
-    return Parser.createLinkNode(start, this.r.getPoint(), chilren, url);
+    // TODO: support rich text
+    const children = [this.createTextNode(start, this.r.getPoint())];
+    return Parser.createLinkNode(start, this.r.getPoint(), children, url);
   }
 
   private parseImage(c: number, start: Point): ParseRichTextResult {
