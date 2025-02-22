@@ -5,13 +5,14 @@
 /* eslint-disable max-len */
 
 /**
- * For running tests: "npx tsx src/lib/temark/parse.test.ts"
- * The output will be written to the file src/lib/temark/ast-test-result-file.json
+ * For running tests and generating files, run: "npx tsx src/lib/temark/index.test.ts"
+ * The output files will be in the same folder
  *
  * TODO: config JEST with a snapshot test or unit tests
  */
 
 import { writeFileSync } from 'fs';
+
 import { parse } from './parse';
 import { stringify } from './stringify';
 
@@ -159,8 +160,8 @@ text_
 // const input2 = `asd~~**__standard__**~~ads`;
 const rootNode = parse(input);
 
-const filePath = './src/lib/temark/ast-test-result-file.json';
+const filePath = './src/lib/temark/_text-parse-result-file.json';
 writeFileSync(filePath, JSON.stringify(rootNode, undefined, 2));
 
 const convertedString = stringify(rootNode);
-writeFileSync('./src/lib/temark/stringify-test-result.txt', convertedString);
+writeFileSync('./src/lib/temark/_text-stringify-result.txt', convertedString);
