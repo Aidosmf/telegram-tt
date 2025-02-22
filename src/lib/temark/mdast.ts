@@ -73,6 +73,7 @@ export interface Html extends Literal {
   type: 'Html';
   tagName: string;
   isVoidElement: boolean;
+  value: string;
 }
 
 /**

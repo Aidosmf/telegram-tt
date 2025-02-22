@@ -12,10 +12,8 @@
  */
 
 import { writeFileSync } from 'fs';
-
-import type { Root } from './mdast';
 import { parse } from './parse';
-import { visit } from './visit';
+import { stringify } from './stringify';
 
 const input = `# Link
 
@@ -158,21 +156,11 @@ text_
 <div broken open html tag<div>
 `;
 
-const input2 = `asd~~**__standard__**~~ads`;
-const rootNode = parse(input2);
+// const input2 = `asd~~**__standard__**~~ads`;
+const rootNode = parse(input);
 
 const filePath = './src/lib/temark/ast-test-result-file.json';
 writeFileSync(filePath, JSON.stringify(rootNode, undefined, 2));
 
-const runVisit = (root: Root) => {
-  visit(root, {
-    enter(node, parent) {
-      console.log("ENTER", node.type, `parent ${parent?.type || 'undefined parent'}`);
-    },
-    exit(node, parent) {
-      console.log("EXIT", node.type, `parent ${parent?.type || 'undefined parent'}`);
-    },
-  });
-};
-
-// runVisit(rootNode);
+const convertedString = stringify(rootNode);
+writeFileSync('./src/lib/temark/stringify-test-result.txt', convertedString);

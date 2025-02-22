@@ -9,3 +9,7 @@ export { Reader } from './reader';
 export {
   visit,
 } from './visit';
+
+export {
+  stringify,
+} from './stringify';
