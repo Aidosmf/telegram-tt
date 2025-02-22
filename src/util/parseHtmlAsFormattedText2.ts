@@ -136,9 +136,9 @@ function parseMarkdown(html: string) {
     `<span data-entity-type="${ApiMessageEntityTypes.Spoiler}">$2</span>`,
   );
 
-  // console.log("MF", "Parsed Before", html);
-  // console.log("MF", "Parsed After", parsedHtml);
-  // console.log("MF", myParseMarkdown(html));
+  console.log("MF", "Parsed Before", html);
+  console.log("MF", "Parsed After", parsedHtml);
+  console.log("MF", myParseMarkdown(html));
 
   return parsedHtml;
 }

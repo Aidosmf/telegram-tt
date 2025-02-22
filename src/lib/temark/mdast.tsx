@@ -150,6 +150,23 @@ export type AnyNode =
   | Text
   | Heading;
 
+export type ParentNode =
+  | Root
+  | Blockquote
+  | Emphasis
+  | Link
+  | Paragraph
+  | Strike
+  | Strong
+  | Heading;
+
+export type LiteralNode =
+  | Code
+  | Text
+  | InlineCode
+  | Image
+  | Html;
+
 export type PhrasingContent = Emphasis | Html | InlineCode | Link | Strong | Text | Strike | Image;
 
 export type FlowContent = Blockquote | Code | Heading | Html | Content;
